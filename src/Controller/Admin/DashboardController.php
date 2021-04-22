@@ -16,9 +16,6 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        $out = [];
-        exec("node /var/www/parser/haxball/replay.js convert /var/www/files/replayData/unparsed/HBReplay-2021-04-22-11h14m.hbr2 /var/www/files/replayData/preprocessed/test.bin",$out);
-        exec("python3 /var/www/parser/test.py /var/www/files/replayData/preprocessed/test.bin",$out);
         return parent::index();
     }
 

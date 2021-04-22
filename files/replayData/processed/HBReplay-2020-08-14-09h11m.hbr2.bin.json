@@ -1,0 +1,38 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 409.25,
+            "goalSide": "Blue",
+            "goalSpeed": 4.624,
+            "goalTime": 409.883,
+            "goalTravelTime": 0.633
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 511.45,
+            "goalSide": "Blue",
+            "goalSpeed": 4.873,
+            "goalTime": 511.817,
+            "goalTravelTime": 0.367
+        }
+    ],
+    "rawPositionsAtEnd": "-496.99485150927626--45.0732993871837|-527.3836680980536--63.59473057907955|-553.6343573921989--42.505243099577015|-313.7567421339091-51.545141949926|",
+    "score": {
+        "Blue": 2,
+        "Red": 0
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "ToPP",
+            "hubigz"
+        ],
+        "Red": [
+            "adamaru",
+            "MaddoHatto"
+        ]
+    },
+    "time": "2020-08-14 09:11"
+}

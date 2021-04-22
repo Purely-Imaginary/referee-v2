@@ -1,0 +1,64 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 71.033,
+            "goalSide": "Blue",
+            "goalSpeed": 2.369,
+            "goalTime": 73.333,
+            "goalTravelTime": 2.3
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 183.917,
+            "goalSide": "Blue",
+            "goalSpeed": 1.759,
+            "goalTime": 185.117,
+            "goalTravelTime": 1.2
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 247.0,
+            "goalSide": "Blue",
+            "goalSpeed": 3.742,
+            "goalTime": 247.533,
+            "goalTravelTime": 0.533
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 304.717,
+            "goalSide": "Blue",
+            "goalSpeed": 4.9,
+            "goalTime": 305.4,
+            "goalTravelTime": 0.683
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 427.167,
+            "goalSide": "Blue",
+            "goalSpeed": 3.526,
+            "goalTime": 427.767,
+            "goalTravelTime": 0.6
+        }
+    ],
+    "rawPositionsAtEnd": "-330.7890833705914--86.71028452177706|-209.80698348845183-36.757300052023346|-168.4262672696665-73.98510104119102|-366.57131861853964--32.10789951270229|-14.739768299181522-62.85724725445244|-196.00260210633223--104.67652326571464|",
+    "score": {
+        "Blue": 5,
+        "Red": 0
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "ToPP",
+            "MaddoHatto",
+            "hubigz"
+        ],
+        "Red": [
+            "adamaru",
+            "K-rol",
+            "Toperz"
+        ]
+    },
+    "time": "2020-05-22 08:58"
+}

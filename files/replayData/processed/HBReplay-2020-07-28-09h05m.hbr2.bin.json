@@ -1,0 +1,96 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "rybak",
+            "goalShotTime": 86.183,
+            "goalSide": "Blue",
+            "goalSpeed": 1.989,
+            "goalTime": 87.7,
+            "goalTravelTime": 1.517
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 232.25,
+            "goalSide": "Blue",
+            "goalSpeed": 1.945,
+            "goalTime": 233.917,
+            "goalTravelTime": 1.667
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 257.717,
+            "goalSide": "Blue",
+            "goalSpeed": 3.648,
+            "goalTime": 258.583,
+            "goalTravelTime": 0.866
+        },
+        {
+            "goalScorerName": "rybak",
+            "goalShotTime": 362.8,
+            "goalSide": "Blue",
+            "goalSpeed": 5.204,
+            "goalTime": 363.333,
+            "goalTravelTime": 0.533
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 422.983,
+            "goalSide": "Blue",
+            "goalSpeed": 1.663,
+            "goalTime": 425.25,
+            "goalTravelTime": 2.267
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 456.65,
+            "goalSide": "Red",
+            "goalSpeed": 8.452,
+            "goalTime": 456.833,
+            "goalTravelTime": 0.183
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 475.283,
+            "goalSide": "Red",
+            "goalSpeed": 1.219,
+            "goalTime": 478.067,
+            "goalTravelTime": 2.784
+        },
+        {
+            "goalScorerName": "rybak",
+            "goalShotTime": 484.4,
+            "goalSide": "Blue",
+            "goalSpeed": 0.789,
+            "goalTime": 487.35,
+            "goalTravelTime": 2.95
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 528.733,
+            "goalSide": "Blue",
+            "goalSpeed": 4.004,
+            "goalTime": 529.467,
+            "goalTravelTime": 0.734
+        }
+    ],
+    "rawPositionsAtEnd": "138.14025086101972-148.94735938801838|276.64736298991755-91.60806678991074|482.243616985815-82.517323070191|428.391219106587-35.30400342013915|380.2136492576903-157.05403731620802|519.3050881187337-79.90471136222239|",
+    "score": {
+        "Blue": 7,
+        "Red": 2
+    },
+    "startingGameTime": 0.517,
+    "teams": {
+        "Blue": [
+            "MaddoHatto",
+            "rybak",
+            "adamaru"
+        ],
+        "Red": [
+            "Amman",
+            "K-rol",
+            "ToPP"
+        ]
+    },
+    "time": "2020-07-28 09:05"
+}

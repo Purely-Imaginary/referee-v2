@@ -1,0 +1,72 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "K-rol",
+            "goalShotTime": 116.65,
+            "goalSide": "Blue",
+            "goalSpeed": 4.143,
+            "goalTime": 117.117,
+            "goalTravelTime": 0.467
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 132.15,
+            "goalSide": "Blue",
+            "goalSpeed": 1.561,
+            "goalTime": 133.9,
+            "goalTravelTime": 1.75
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 268.2,
+            "goalSide": "Blue",
+            "goalSpeed": 3.347,
+            "goalTime": 269.05,
+            "goalTravelTime": 0.85
+        },
+        {
+            "goalScorerName": "K-rol",
+            "goalShotTime": 339.45,
+            "goalSide": "Blue",
+            "goalSpeed": 4.358,
+            "goalTime": 339.6,
+            "goalTravelTime": 0.15
+        },
+        {
+            "goalScorerName": "Toperz",
+            "goalShotTime": 388.85,
+            "goalSide": "Red",
+            "goalSpeed": 4.925,
+            "goalTime": 389.117,
+            "goalTravelTime": 0.267
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 444.283,
+            "goalSide": "Red",
+            "goalSpeed": 3.693,
+            "goalTime": 444.8,
+            "goalTravelTime": 0.517
+        }
+    ],
+    "rawPositionsAtEnd": "-290.55805434829716-82.95448257943433|-257.8722691569364--85.82806743755413|-369.8751856302685-205.47375237108676|-258.08681162347307--120.00052393839246|267.3897983533876--60.43534598750212|",
+    "score": {
+        "Blue": 4,
+        "Red": 2
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "MaddoHatto",
+            "K-rol",
+            "adamaru"
+        ],
+        "Red": [
+            "Toperz",
+            "ToPP",
+            "hubigz"
+        ]
+    },
+    "time": "2020-05-26 09:57"
+}

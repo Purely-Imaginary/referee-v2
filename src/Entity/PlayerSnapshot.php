@@ -43,6 +43,11 @@ class PlayerSnapshot
      */
     private $calculatedMatch;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=TeamSnapshot::class, inversedBy="players")
+     */
+    private $teamSnapshot;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,18 @@ class PlayerSnapshot
     public function setCalculatedMatch(?CalculatedMatch $calculatedMatch): self
     {
         $this->calculatedMatch = $calculatedMatch;
+
+        return $this;
+    }
+
+    public function getTeamSnapshot(): ?TeamSnapshot
+    {
+        return $this->teamSnapshot;
+    }
+
+    public function setTeamSnapshot(?TeamSnapshot $teamSnapshot): self
+    {
+        $this->teamSnapshot = $teamSnapshot;
 
         return $this;
     }

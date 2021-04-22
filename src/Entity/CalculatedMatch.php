@@ -18,7 +18,7 @@ class CalculatedMatch
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -50,10 +50,16 @@ class CalculatedMatch
      */
     private $playerSnapshots;
 
+    /**
+     * @ORM\OneToMany(targetEntity=TeamSnapshot::class, mappedBy="redCalculatedMatch")
+     */
+    private $teamSnapshots;
+
     public function __construct()
     {
         $this->goals = new ArrayCollection();
         $this->playerSnapshots = new ArrayCollection();
+        $this->teamSnapshots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,6 +169,36 @@ class CalculatedMatch
             // set the owning side to null (unless already changed)
             if ($playerSnapshot->getCalculatedMatch() === $this) {
                 $playerSnapshot->setCalculatedMatch(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TeamSnapshot[]
+     */
+    public function getTeamSnapshots(): Collection
+    {
+        return $this->teamSnapshots;
+    }
+
+    public function addTeamSnapshot(TeamSnapshot $teamSnapshot): self
+    {
+        if (!$this->teamSnapshots->contains($teamSnapshot)) {
+            $this->teamSnapshots[] = $teamSnapshot;
+            $teamSnapshot->setRedCalculatedMatch($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeamSnapshot(TeamSnapshot $teamSnapshot): self
+    {
+        if ($this->teamSnapshots->removeElement($teamSnapshot)) {
+            // set the owning side to null (unless already changed)
+            if ($teamSnapshot->getRedCalculatedMatch() === $this) {
+                $teamSnapshot->setRedCalculatedMatch(null);
             }
         }
 

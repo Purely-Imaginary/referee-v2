@@ -25,39 +25,34 @@ class Player
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default":0})
      */
-    private $wins;
+    private $wins = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default":0})
      */
-    private $losses;
+    private $losses = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default":0})
      */
-    private $goalsShot;
+    private $goalsShot = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default":0})
      */
-    private $goalsScored;
+    private $goalsScored = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default":0})
      */
-    private $goalsLost;
+    private $goalsLost = 0;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
-    private $winRate;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $rating;
+    private $rating = null;
 
     /**
      * @ORM\OneToMany(targetEntity=PlayerSnapshot::class, mappedBy="player", orphanRemoval=true)
@@ -154,14 +149,7 @@ class Player
 
     public function getWinRate(): ?float
     {
-        return $this->winRate;
-    }
-
-    public function setWinRate(float $winRate): self
-    {
-        $this->winRate = $winRate;
-
-        return $this;
+        return $this->getWins() / ($this->getWins() + $this->getLosses());
     }
 
     public function getRating(): ?float
@@ -234,5 +222,15 @@ class Player
         }
 
         return $this;
+    }
+
+    public function addWin(): void
+    {
+        $this->setWins($this->getWins() + 1);
+    }
+
+    public function addLoss(): void
+    {
+        $this->setLosses($this->getLosses() + 1);
     }
 }

@@ -70,7 +70,7 @@ class PlayerSnapshot
         return $this->rating;
     }
 
-    public function setRating(float $rating): self
+    public function setRating(?float $rating): self
     {
         $this->rating = $rating;
 

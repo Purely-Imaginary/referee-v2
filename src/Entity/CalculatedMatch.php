@@ -6,6 +6,7 @@ use App\Repository\CalculatedMatchRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * @ORM\Entity(repositoryClass=CalculatedMatchRepository::class)
@@ -23,39 +24,45 @@ class CalculatedMatch
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $time;
+    private ?string $time;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $startTime;
+    private ?float $startTime;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $endTime;
+    private ?float $endTime;
 
     /**
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
-    private $rawPositions;
+    private ?string $rawPositions;
 
     /**
+     * @var Goal[]|Collection
+     *
      * @ORM\OneToMany(targetEntity=Goal::class, mappedBy="calculatedMatch")
      */
     private $goals;
 
     /**
+     * @var PlayerSnapshot[]|Collection
+     *
      * @ORM\OneToMany(targetEntity=PlayerSnapshot::class, mappedBy="calculatedMatch")
      */
     private $playerSnapshots;
 
     /**
+     * @var TeamSnapshot[]|Collection
+     *
      * @ORM\OneToMany(targetEntity=TeamSnapshot::class, mappedBy="redCalculatedMatch")
      */
     private $teamSnapshots;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->goals = new ArrayCollection();
         $this->playerSnapshots = new ArrayCollection();
@@ -118,7 +125,7 @@ class CalculatedMatch
     /**
      * @return Collection|Goal[]
      */
-    public function getGoals(): Collection
+    public function getGoals()
     {
         return $this->goals;
     }
@@ -148,7 +155,7 @@ class CalculatedMatch
     /**
      * @return Collection|PlayerSnapshot[]
      */
-    public function getPlayerSnapshots(): Collection
+    public function getPlayerSnapshots()
     {
         return $this->playerSnapshots;
     }
@@ -178,7 +185,7 @@ class CalculatedMatch
     /**
      * @return Collection|TeamSnapshot[]
      */
-    public function getTeamSnapshots(): Collection
+    public function getTeamSnapshots()
     {
         return $this->teamSnapshots;
     }
@@ -187,7 +194,7 @@ class CalculatedMatch
     {
         if (!$this->teamSnapshots->contains($teamSnapshot)) {
             $this->teamSnapshots[] = $teamSnapshot;
-            $teamSnapshot->setRedCalculatedMatch($this);
+            $teamSnapshot->setCalculatedMatch($this);
         }
 
         return $this;
@@ -197,11 +204,26 @@ class CalculatedMatch
     {
         if ($this->teamSnapshots->removeElement($teamSnapshot)) {
             // set the owning side to null (unless already changed)
-            if ($teamSnapshot->getRedCalculatedMatch() === $this) {
-                $teamSnapshot->setRedCalculatedMatch(null);
+            if ($teamSnapshot->getCalculatedMatch() === $this) {
+                $teamSnapshot->setCalculatedMatch(null);
             }
         }
 
         return $this;
+    }
+
+    #[Pure] public function getTeamSnapshot(string $teamColor): ?TeamSnapshot
+    {
+        foreach ($this->getTeamSnapshots() as $teamSnapshot) {
+            if (strtolower($teamSnapshot->getTeamColor()) === strtolower($teamColor))
+                return $teamSnapshot;
+        }
+
+        return null;
+    }
+
+    #[Pure] public function didRedWon(): bool
+    {
+        return $this->getTeamSnapshot('red')->getScore() > $this->getTeamSnapshot('blue')->getScore();
     }
 }

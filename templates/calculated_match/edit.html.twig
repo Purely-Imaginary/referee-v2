@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CalculatedMatch{% endblock %}
+
+{% block body %}
+    <h1>Edit CalculatedMatch</h1>
+
+    {{ include('calculated_match/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('calculated_match_index') }}">back to list</a>
+
+    {{ include('calculated_match/_delete_form.html.twig') }}
+{% endblock %}

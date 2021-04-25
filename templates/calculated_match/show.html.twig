@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CalculatedMatch{% endblock %}
+
+{% block body %}
+    <h1>CalculatedMatch</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ calculated_match.id }}</td>
+            </tr>
+            <tr>
+                <th>Time</th>
+                <td>{{ calculated_match.time }}</td>
+            </tr>
+            <tr>
+                <th>StartTime</th>
+                <td>{{ calculated_match.startTime }}</td>
+            </tr>
+            <tr>
+                <th>EndTime</th>
+                <td>{{ calculated_match.endTime }}</td>
+            </tr>
+            <tr>
+                <th>RawPositions</th>
+                <td>{{ calculated_match.rawPositions }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('calculated_match_index') }}">back to list</a>
+
+    <a href="{{ path('calculated_match_edit', {'id': calculated_match.id}) }}">edit</a>
+
+    {{ include('calculated_match/_delete_form.html.twig') }}
+{% endblock %}

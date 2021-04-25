@@ -22,12 +22,7 @@ class TeamSnapshot
     /**
      * @ORM\OneToMany(targetEntity=PlayerSnapshot::class, mappedBy="teamSnapshot")
      */
-    private $players;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $AvgTeamRating;
+    private $playerSnapshots;
 
     /**
      * @ORM\Column(type="integer")
@@ -37,16 +32,21 @@ class TeamSnapshot
     /**
      * @ORM\ManyToOne(targetEntity=CalculatedMatch::class, inversedBy="teamSnapshots")
      */
-    private $redCalculatedMatch;
+    private $calculatedMatch;
 
     /**
      * @ORM\Column(type="float")
      */
     private $ratingChange;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $teamColor;
+
     public function __construct()
     {
-        $this->players = new ArrayCollection();
+        $this->playerSnapshots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,15 +57,15 @@ class TeamSnapshot
     /**
      * @return Collection|PlayerSnapshot[]
      */
-    public function getPlayers(): Collection
+    public function getPlayerSnapshots(): Collection
     {
-        return $this->players;
+        return $this->playerSnapshots;
     }
 
     public function addPlayer(PlayerSnapshot $player): self
     {
-        if (!$this->players->contains($player)) {
-            $this->players[] = $player;
+        if (!$this->playerSnapshots->contains($player)) {
+            $this->playerSnapshots[] = $player;
             $player->setTeamSnapshot($this);
         }
 
@@ -74,7 +74,7 @@ class TeamSnapshot
 
     public function removePlayer(PlayerSnapshot $player): self
     {
-        if ($this->players->removeElement($player)) {
+        if ($this->playerSnapshots->removeElement($player)) {
             // set the owning side to null (unless already changed)
             if ($player->getTeamSnapshot() === $this) {
                 $player->setTeamSnapshot(null);
@@ -86,15 +86,13 @@ class TeamSnapshot
 
     public function getAvgTeamRating(): ?float
     {
-        return $this->AvgTeamRating;
+        return array_sum(
+                array_map(
+                    fn ($v) => $v->getRating(), $this->getPlayerSnapshots()->toArray()
+                )
+            ) / count($this->getPlayerSnapshots());
     }
 
-    public function setAvgTeamRating(float $AvgTeamRating): self
-    {
-        $this->AvgTeamRating = $AvgTeamRating;
-
-        return $this;
-    }
 
     public function getScore(): ?int
     {
@@ -108,14 +106,14 @@ class TeamSnapshot
         return $this;
     }
 
-    public function getRedCalculatedMatch(): ?CalculatedMatch
+    public function getCalculatedMatch(): ?CalculatedMatch
     {
-        return $this->redCalculatedMatch;
+        return $this->calculatedMatch;
     }
 
-    public function setRedCalculatedMatch(?CalculatedMatch $redCalculatedMatch): self
+    public function setCalculatedMatch(?CalculatedMatch $calculatedMatch): self
     {
-        $this->redCalculatedMatch = $redCalculatedMatch;
+        $this->calculatedMatch = $calculatedMatch;
 
         return $this;
     }
@@ -128,6 +126,18 @@ class TeamSnapshot
     public function setRatingChange(float $ratingChange): self
     {
         $this->ratingChange = $ratingChange;
+
+        return $this;
+    }
+
+    public function getTeamColor(): ?string
+    {
+        return $this->teamColor;
+    }
+
+    public function setTeamColor(string $teamColor): self
+    {
+        $this->teamColor = $teamColor;
 
         return $this;
     }

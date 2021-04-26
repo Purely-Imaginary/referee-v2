@@ -58,7 +58,7 @@ class CalculatedMatch
     /**
      * @var TeamSnapshot[]|Collection
      *
-     * @ORM\OneToMany(targetEntity=TeamSnapshot::class, mappedBy="redCalculatedMatch")
+     * @ORM\OneToMany(targetEntity=TeamSnapshot::class, mappedBy="calculatedMatch")
      */
     private $teamSnapshots;
 
@@ -212,10 +212,10 @@ class CalculatedMatch
         return $this;
     }
 
-    #[Pure] public function getTeamSnapshot(string $teamColor): ?TeamSnapshot
+    #[Pure] public function getTeamSnapshot(bool $getRed): ?TeamSnapshot
     {
         foreach ($this->getTeamSnapshots() as $teamSnapshot) {
-            if (strtolower($teamSnapshot->getTeamColor()) === strtolower($teamColor))
+            if ($teamSnapshot->isRed() === $getRed)
                 return $teamSnapshot;
         }
 
@@ -224,6 +224,6 @@ class CalculatedMatch
 
     #[Pure] public function didRedWon(): bool
     {
-        return $this->getTeamSnapshot('red')->getScore() > $this->getTeamSnapshot('blue')->getScore();
+        return $this->getTeamSnapshot(true)->getScore() > $this->getTeamSnapshot(false)->getScore();
     }
 }

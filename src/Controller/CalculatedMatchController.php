@@ -25,8 +25,12 @@ class CalculatedMatchController extends AbstractController
     #[Route('/new', name: 'calculated_match_new', methods: ['GET', 'POST'])]
     public function new(Request $request, MatchCalculatorService $matchCalculator): Response
     {
-        $data = $matchCalculator->getDataFromFile("HBReplay-2020-04-07-14h08m.hbr2.bin.json");
-        $result = $matchCalculator->process($data);
+        $files = scandir("/var/www/files/replayData/processed");
+        array_shift($files);
+        array_shift($files);
+        foreach ($files as $file) {
+            $matchCalculator->process($matchCalculator->getDataFromFile($file));
+        }
 
         return new Response();
     }

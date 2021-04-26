@@ -30,19 +30,19 @@ class TeamSnapshot
     private $score;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CalculatedMatch::class, inversedBy="teamSnapshots")
+     * @ORM\ManyToOne(targetEntity=CalculatedMatch::class, inversedBy="teamSnapshots", cascade={"persist"})
      */
     private $calculatedMatch;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $ratingChange;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="boolean")
      */
-    private $teamColor;
+    private $isRed;
 
     public function __construct()
     {
@@ -84,11 +84,11 @@ class TeamSnapshot
         return $this;
     }
 
-    public function getAvgTeamRating(): ?float
+    public function getAvgTeamRating(bool $fillZeroes = false): ?float
     {
         return array_sum(
                 array_map(
-                    fn ($v) => $v->getRating(), $this->getPlayerSnapshots()->toArray()
+                    fn ($v) => $fillZeroes ? ($v->getRating() ?? Player::$startingRating) : $v->getRating(), $this->getPlayerSnapshots()->toArray()
 
                 )
             ) / count($this->getPlayerSnapshots());
@@ -131,15 +131,20 @@ class TeamSnapshot
         return $this;
     }
 
-    public function getTeamColor(): ?string
+    public function isRed(): ?bool
     {
-        return $this->teamColor;
+        return $this->isRed;
     }
 
-    public function setTeamColor(string $teamColor): self
+    public function setIsRed(bool $isRed): self
     {
-        $this->teamColor = $teamColor;
+        $this->isRed = $isRed;
 
         return $this;
+    }
+
+    public function getEnemyTeam(): TeamSnapshot
+    {
+        return $this->getCalculatedMatch()->getTeamSnapshot(!$this->isRed());
     }
 }

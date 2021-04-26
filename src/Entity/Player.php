@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Player
 {
+    public static int $unrankedMatchesAmount = 10;
+    public static int $startingRating = 1000;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -232,5 +234,10 @@ class Player
     public function addLoss(): void
     {
         $this->setLosses($this->getLosses() + 1);
+    }
+
+    public function getTotalMatches(): int
+    {
+        return $this->getWins() + $this->getLosses();
     }
 }

@@ -46,7 +46,7 @@ class RegenerateCommand extends Command
         $counter = 0;
         $out = [];
 
-        if ($input->getArgument("parseHbrs") === true) {
+        if ($input->getArgument("parseHbrs") === "true") {
             foreach ($files as $file) {
                 $counter++;
                 exec("node /var/www/parser/haxball/replay.js convert /var/www/files/replayData/unparsed/$file /var/www/files/replayData/preprocessed/$file.bin", $out);

@@ -24,9 +24,9 @@ class PlayerSnapshot
     private $player;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
-    private $rating;
+    private $rating = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -34,17 +34,12 @@ class PlayerSnapshot
     private $isRed;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="players")
-     */
-    private $team;
-
-    /**
      * @ORM\ManyToOne(targetEntity=CalculatedMatch::class, inversedBy="playerSnapshots")
      */
     private $calculatedMatch;
 
     /**
-     * @ORM\ManyToOne(targetEntity=TeamSnapshot::class, inversedBy="players")
+     * @ORM\ManyToOne(targetEntity=TeamSnapshot::class, inversedBy="players", cascade={"persist"})
      */
     private $teamSnapshot;
 
@@ -61,7 +56,7 @@ class PlayerSnapshot
     public function setPlayer(?Player $player): self
     {
         $this->player = $player;
-
+        $player->addPlayerSnapshot($this);
         return $this;
     }
 
@@ -89,18 +84,6 @@ class PlayerSnapshot
         return $this;
     }
 
-    public function getTeam(): ?Team
-    {
-        return $this->team;
-    }
-
-    public function setTeam(?Team $team): self
-    {
-        $this->team = $team;
-
-        return $this;
-    }
-
     public function getCalculatedMatch(): ?CalculatedMatch
     {
         return $this->calculatedMatch;
@@ -121,6 +104,7 @@ class PlayerSnapshot
     public function setTeamSnapshot(?TeamSnapshot $teamSnapshot): self
     {
         $this->teamSnapshot = $teamSnapshot;
+        $teamSnapshot->addPlayer($this);
 
         return $this;
     }

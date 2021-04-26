@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\CalculatedMatch;
+use App\Entity\Player;
 use App\Entity\Test;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -28,6 +30,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('The Label', 'fas fa-list', Test::class);
+        yield MenuItem::linkToCrud('Calculated Matches', 'fas fa-award', CalculatedMatch::class);
+        yield MenuItem::linkToCrud('Players', 'fas fa-child', Player::class);
     }
 }

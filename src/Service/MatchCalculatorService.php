@@ -44,11 +44,13 @@ class MatchCalculatorService
 
         $ratingChange = $this->calculateRatingChange($newCalculatedMatch);
 
-        $newCalculatedMatch->getTeamSnapshot('red')->setRatingChange($ratingChange);
-        $newCalculatedMatch->getTeamSnapshot('blue')->setRatingChange(-$ratingChange);
+        $newCalculatedMatch->getTeamSnapshot(true)->setRatingChange($ratingChange);
+        $newCalculatedMatch->getTeamSnapshot(false)->setRatingChange(-$ratingChange);
 
+        $this->entityManager->flush();
         $this->updatePlayers($newCalculatedMatch);
         $this->entityManager->persist($newCalculatedMatch);
+        $this->entityManager->flush();
         return $newCalculatedMatch;
     }
 
@@ -66,7 +68,8 @@ class MatchCalculatorService
     {
         $teamSnapshot = (new TeamSnapshot())
             ->setScore($data['score'][$teamName])
-            ->setTeamColor($teamName);
+            ->setIsRed(strtolower($teamName) === 'red');
+
         foreach ($data['teams'][$teamName] as $playerName) {
             $player = $this->playerRepository->findOneBy(['name' => $playerName]);
             if (null === $player) {
@@ -81,6 +84,7 @@ class MatchCalculatorService
                 ->setTeamSnapshot($teamSnapshot));
         }
         $this->entityManager->persist($teamSnapshot);
+        $this->entityManager->flush();
         return $teamSnapshot;
     }
 
@@ -98,17 +102,20 @@ class MatchCalculatorService
         return $goal;
     }
 
-    protected function calculateRatingChange(CalculatedMatch $newCalculatedMatch): float
+    protected function calculateRatingChange(CalculatedMatch $newCalculatedMatch, bool $checkForUnclassified = true): float
     {
-        $ratingDifference = $newCalculatedMatch->getTeamSnapshot('blue')->getAvgTeamRating() - $newCalculatedMatch->getTeamSnapshot('red')->getAvgTeamRating();
-        $powerPiece = pow(10, ($ratingDifference / 400));
-        $winChance = (1 / (1 + $powerPiece));
-        $scorePerformance = 0.5;
-
-        if (($newCalculatedMatch->getTeamSnapshot('red')->getScore() + $newCalculatedMatch->getTeamSnapshot('blue')->getScore() == 0)) {
+        if ($checkForUnclassified && $this->checkForUnclassifiedPlayers($newCalculatedMatch)){
             return 0;
         }
-        $scoreDifference = $newCalculatedMatch->getTeamSnapshot('red')->getScore() - $newCalculatedMatch->getTeamSnapshot('blue')->getScore();
+
+        $ratingDifference = $newCalculatedMatch->getTeamSnapshot(false)->getAvgTeamRating(true) - $newCalculatedMatch->getTeamSnapshot(true)->getAvgTeamRating(true);
+        $powerPiece = pow(10, ($ratingDifference / 400));
+        $winChance = (1 / (1 + $powerPiece));
+
+        if (($newCalculatedMatch->getTeamSnapshot(true)->getScore() + $newCalculatedMatch->getTeamSnapshot(false)->getScore() == 0)) {
+            return 0;
+        }
+        $scoreDifference = $newCalculatedMatch->getTeamSnapshot(true)->getScore() - $newCalculatedMatch->getTeamSnapshot(false)->getScore();
         $scorePerformance = $scoreDifference > 0 ?
             (((1 - $winChance) / 10) * $scoreDifference) + $winChance :
             (($winChance / 10) * $scoreDifference) + $winChance;
@@ -116,27 +123,73 @@ class MatchCalculatorService
         // Old calc method:
         // scorePerformance = float32(scoreDifference+10) / 20
 
-        $ratingChange = $scorePerformance - $winChance * self::$kCoefficient;
+        $ratingChange = ($scorePerformance - $winChance) * self::$kCoefficient;
 
-        return $ratingChange / count($newCalculatedMatch->getTeamSnapshot('red')->getPlayerSnapshots());
+        return $ratingChange / count($newCalculatedMatch->getTeamSnapshot(true)->getPlayerSnapshots());
     }
 
     protected function updatePlayers(CalculatedMatch $newCalculatedMatch)
     {
-        foreach ($newCalculatedMatch->getTeamSnapshot('red')->getPlayerSnapshots() as $playerSnapshot) {
+        foreach ($newCalculatedMatch->getTeamSnapshot(true)->getPlayerSnapshots() as $playerSnapshot) {
             $player = $playerSnapshot->getPlayer();
             $newCalculatedMatch->didRedWon() ? $player->addWin() : $player->addLoss();
             $player->setGoalsScored($player->getGoalsScored() + $playerSnapshot->getTeamSnapshot()->getScore());
-            $player->setGoalsLost($player->getGoalsLost() + $newCalculatedMatch->getTeamSnapshot('blue')->getScore());
-            $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
+            $player->setGoalsLost($player->getGoalsLost() + $newCalculatedMatch->getTeamSnapshot(false)->getScore());
+            if ($player->getRating() !== null) {
+                $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
+            }
+            if ($player->getTotalMatches() >= Player::$unrankedMatchesAmount && $player->getRating() === null){
+                $this->classifyPlayer($player);
+            }
         }
 
-        foreach ($newCalculatedMatch->getTeamSnapshot('blue')->getPlayerSnapshots() as $playerSnapshot) {
+        foreach ($newCalculatedMatch->getTeamSnapshot(false)->getPlayerSnapshots() as $playerSnapshot) {
             $player = $playerSnapshot->getPlayer();
             !$newCalculatedMatch->didRedWon() ? $player->addWin() : $player->addLoss();
             $player->setGoalsScored($player->getGoalsScored() + $playerSnapshot->getTeamSnapshot()->getScore());
-            $player->setGoalsLost($player->getGoalsLost() + $newCalculatedMatch->getTeamSnapshot('red')->getScore());
-            $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
+            $player->setGoalsLost($player->getGoalsLost() + $newCalculatedMatch->getTeamSnapshot(true)->getScore());
+            if ($player->getRating() !== null) {
+                $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
+            }
+            if ($player->getTotalMatches() >= Player::$unrankedMatchesAmount && $player->getRating() === null){
+                $this->classifyPlayer($player);
+            }
         }
+    }
+
+    protected function checkForUnclassifiedPlayers(CalculatedMatch $calculatedMatch): bool
+    {
+        foreach ($calculatedMatch->getTeamSnapshots() as $teamSnapshot) {
+            foreach ($teamSnapshot->getPlayerSnapshots() as $playerSnapshot) {
+                if ($playerSnapshot->getPlayer()->getTotalMatches() < Player::$unrankedMatchesAmount)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected function classifyPlayer(Player $player): void
+    {
+        $matchesEstimatedRatings = [];
+        foreach ($player->getPlayerSnapshots() as $playerSnapshot) {
+            $matchesEstimatedRatings[] = $this->estimateRating($player, $playerSnapshot->getTeamSnapshot());
+        }
+        $rating = array_sum($matchesEstimatedRatings) / count($matchesEstimatedRatings);
+        $player->setRating($rating);
+    }
+
+    function estimateRating(Player $player, TeamSnapshot $teamSnapshot): float {
+        $ratingForTie = $teamSnapshot->getPlayerSnapshots()->count() * $teamSnapshot->getEnemyTeam()->getAvgTeamRating(true);
+        foreach ($teamSnapshot->getPlayerSnapshots() as $playerSnapshot) {
+            if ($playerSnapshot->getPlayer() !== $player) {
+                $ratingForTie -= $playerSnapshot->getRating() ?? Player::$startingRating;
+            }
+        }
+        $estimatedRatingChangeForRed = $this->calculateRatingChange($teamSnapshot->getCalculatedMatch(), false);
+        $estimatedRatingChangeForRed = $teamSnapshot->isRed() ? $estimatedRatingChangeForRed : -$estimatedRatingChangeForRed;
+
+        return $ratingForTie + ($estimatedRatingChangeForRed * 40);
     }
 }

@@ -6,6 +6,8 @@ use App\Repository\TeamSnapshotRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=TeamSnapshotRepository::class)
@@ -20,11 +22,14 @@ class TeamSnapshot
     private $id;
 
     /**
+     * @Groups("lastMatches")
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity=PlayerSnapshot::class, mappedBy="teamSnapshot")
      */
     private $playerSnapshots;
 
     /**
+     * @Groups("lastMatches")
      * @ORM\Column(type="integer")
      */
     private $score;
@@ -35,11 +40,13 @@ class TeamSnapshot
     private $calculatedMatch;
 
     /**
+     * @Groups("lastMatches")
      * @ORM\Column(type="float", nullable=true)
      */
     private $ratingChange;
 
     /**
+     * @Groups("lastMatches")
      * @ORM\Column(type="boolean")
      */
     private $isRed;

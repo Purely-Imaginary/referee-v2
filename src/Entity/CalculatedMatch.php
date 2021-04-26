@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=CalculatedMatchRepository::class)
@@ -15,6 +17,7 @@ use JetBrains\PhpStorm\Pure;
 class CalculatedMatch
 {
     /**
+     * @Groups("lastMatches")
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -22,6 +25,7 @@ class CalculatedMatch
     private ?int $id;
 
     /**
+     * @Groups("lastMatches")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $time;
@@ -56,6 +60,8 @@ class CalculatedMatch
     private $playerSnapshots;
 
     /**
+     * @Groups("lastMatches")
+     * @MaxDepth(1)
      * @var TeamSnapshot[]|Collection
      *
      * @ORM\OneToMany(targetEntity=TeamSnapshot::class, mappedBy="calculatedMatch")

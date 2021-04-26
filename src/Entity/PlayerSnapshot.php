@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\PlayerSnapshotRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=PlayerSnapshotRepository::class)
@@ -18,17 +20,21 @@ class PlayerSnapshot
     private $id;
 
     /**
+     * @Groups("lastMatches")
+     * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="playerSnapshots")
      * @ORM\JoinColumn(nullable=false)
      */
     private $player;
 
     /**
+     * @Groups("lastMatches")
      * @ORM\Column(type="float", nullable=true)
      */
     private $rating = null;
 
     /**
+     * @Groups("lastMatches")
      * @ORM\Column(type="boolean")
      */
     private $isRed;

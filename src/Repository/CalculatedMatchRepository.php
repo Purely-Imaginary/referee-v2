@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\CalculatedMatch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,5 +18,14 @@ class CalculatedMatchRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CalculatedMatch::class);
+    }
+
+    public function getLastMatches(int $amount)
+    {
+        return $this->createQueryBuilder('cm')
+            ->orderBy('cm.time', 'DESC')
+            ->getQuery()
+            ->setMaxResults($amount)
+            ->getResult();
     }
 }

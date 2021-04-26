@@ -1,6 +1,7 @@
 {
     "gameTime": 360.433,
-    "goalsData": [{
+    "goalsData": [
+        {
             "goalScorerName": "K-rol",
             "goalShotTime": 14.617,
             "goalSide": "Red",

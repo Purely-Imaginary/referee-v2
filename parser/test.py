@@ -27,14 +27,14 @@ def threadedAnalysis(path):
             tickCounter = 0
             goals = []
             score = {
-                'red' : 0,
-                'blue': 0
+                'Red' : 0,
+                'Blue': 0
             }
 
             if bin[1][0].gameTime is not None:
                 score = {
-                    'red': bin[1][0].score[0],
-                    'blue': bin[1][0].score[1],
+                    'Red': bin[1][0].score[0],
+                    'Blue': bin[1][0].score[1],
                 }
                 startingGameTime = bin[1][0].gameTime
 
@@ -55,9 +55,9 @@ def threadedAnalysis(path):
                     goalScorerId = -1
                     goalShotTime = 0
                     # TODO: goalShotSpeed
-                    goalSide = "red"
+                    goalSide = "Red"
                     if (bin[1][tickCounter-1].score[0] == tick.score[0]):
-                        goalSide = "blue"
+                        goalSide = "Blue"
                     for i in reversed(range(tickCounter-1)):
                         if goalScorerId != -1:
                             break
@@ -80,10 +80,10 @@ def threadedAnalysis(path):
                         "goalSpeed": round(math.hypot(tick.ball.vy, tick.ball.vx),3),
                         "goalTravelTime": round(tick.gameTime - goalShotTime, 3)
                     })
-                    if (goalSide == "red"):
-                        score['red'] += 1
+                    if (goalSide == "Red"):
+                        score['Red'] += 1
                     else:
-                        score['blue'] += 1
+                        score['Blue'] += 1
 
                 tickCounter+=1
             if meaningfulStates.__len__() == 0:
@@ -92,7 +92,7 @@ def threadedAnalysis(path):
 
             lastState = meaningfulStates[-1:]
             rawPositions = ""
-            teams = {'red': [], 'blue': []}
+            teams = {'Red': [], 'Blue': []}
             for player in lastState[0].players:
                 rawPositions += str(player.disc.x) + "-" + str(player.disc.y) + "|"
 

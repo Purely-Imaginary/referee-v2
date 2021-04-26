@@ -133,8 +133,10 @@ class MatchCalculatorService
         foreach ($newCalculatedMatch->getTeamSnapshot(true)->getPlayerSnapshots() as $playerSnapshot) {
             $player = $playerSnapshot->getPlayer();
             $newCalculatedMatch->didRedWon() ? $player->addWin() : $player->addLoss();
+
             $player->setGoalsScored($player->getGoalsScored() + $playerSnapshot->getTeamSnapshot()->getScore());
             $player->setGoalsLost($player->getGoalsLost() + $newCalculatedMatch->getTeamSnapshot(false)->getScore());
+
             if ($player->getRating() !== null) {
                 $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
             }
@@ -146,8 +148,10 @@ class MatchCalculatorService
         foreach ($newCalculatedMatch->getTeamSnapshot(false)->getPlayerSnapshots() as $playerSnapshot) {
             $player = $playerSnapshot->getPlayer();
             !$newCalculatedMatch->didRedWon() ? $player->addWin() : $player->addLoss();
+
             $player->setGoalsScored($player->getGoalsScored() + $playerSnapshot->getTeamSnapshot()->getScore());
             $player->setGoalsLost($player->getGoalsLost() + $newCalculatedMatch->getTeamSnapshot(true)->getScore());
+
             if ($player->getRating() !== null) {
                 $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
             }

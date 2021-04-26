@@ -89,6 +89,7 @@ class TeamSnapshot
         return array_sum(
                 array_map(
                     fn ($v) => $v->getRating(), $this->getPlayerSnapshots()->toArray()
+
                 )
             ) / count($this->getPlayerSnapshots());
     }

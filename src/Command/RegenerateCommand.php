@@ -12,8 +12,8 @@ class RegenerateCommand extends Command
 // the name of the command (the part after "bin/console")
     protected static $defaultName = 'referee:regenerate';
     protected static $unparsedFilesDir = "/var/www/files/replayData/unparsed";
+    protected static $processedFilesDir = "/var/www/files/replayData/processed";
 
-    // ...
     private bool $parseHbrs;
 
     public function __construct(bool $parseHbrs = false)
@@ -34,7 +34,7 @@ class RegenerateCommand extends Command
 
         $this
             ->addArgument('parseHbrs', InputArgument::OPTIONAL, 'Parse from hbrs instead of using ready jsons')
-        ;
+            ->addArgument('reparseHbrs', InputArgument::OPTIONAL, 'Reparse all hbrs instead of checking if it has been already parsed');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -43,12 +43,18 @@ class RegenerateCommand extends Command
         array_shift($files);
         array_shift($files);
 
+        $processed = scandir(self::$processedFilesDir);
+
         $counter = 0;
         $out = [];
 
         if ($input->getArgument("parseHbrs") === "true") {
             foreach ($files as $file) {
                 $counter++;
+                if ($input->getArgument("reparseHbrs") !== "true" && in_array($file.'.bin.json', $processed)) {
+                    continue;
+                }
+
                 exec("node /var/www/parser/haxball/replay.js convert /var/www/files/replayData/unparsed/$file /var/www/files/replayData/preprocessed/$file.bin", $out);
                 exec("python3 /var/www/parser/test.py /var/www/files/replayData/preprocessed/$file.bin", $out);
                 echo "$counter/" . count($files) . "\n";

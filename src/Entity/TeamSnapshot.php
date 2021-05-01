@@ -23,7 +23,6 @@ class TeamSnapshot
 
     /**
      * @Groups("lastMatches")
-     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity=PlayerSnapshot::class, mappedBy="teamSnapshot")
      */
     private $playerSnapshots;

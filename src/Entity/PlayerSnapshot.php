@@ -21,7 +21,6 @@ class PlayerSnapshot
 
     /**
      * @Groups("lastMatches")
-     * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="playerSnapshots")
      * @ORM\JoinColumn(nullable=false)
      */

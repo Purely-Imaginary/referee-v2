@@ -46,23 +46,10 @@ class CalculatedMatchController extends AbstractController
     public function getLastMatches(
         CalculatedMatchRepository $calculatedMatchRepository,
         SerializerInterface $serializer,
-        NormalizerInterface $normalizer
     ): JsonResponse
     {
-        $lastMatches = $calculatedMatchRepository->getLastMatches(1);
-        $json = $serializer->serialize($lastMatches, 'json', ['groups' => ['lastMatches']]);
+        $lastMatches = $calculatedMatchRepository->getLastMatches(2);
 
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        $json2 = $serializer->serialize($lastMatches, 'json');
-
-        return $this->json($lastMatches);
+        return $this->json($lastMatches,Response::HTTP_OK, [], ['groups' => 'lastMatches']);
     }
 }

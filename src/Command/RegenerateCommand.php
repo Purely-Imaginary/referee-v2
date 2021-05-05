@@ -11,8 +11,8 @@ class RegenerateCommand extends Command
 {
 // the name of the command (the part after "bin/console")
     protected static $defaultName = 'referee:regenerate';
-    protected static $unparsedFilesDir = "/var/www/files/replayData/unparsed";
-    protected static $processedFilesDir = "/var/www/files/replayData/processed";
+    protected static string $unparsedFilesDir = "/var/www/files/replayData/unparsed";
+    protected static string $processedFilesDir = "/var/www/files/replayData/processed";
 
     private bool $parseHbrs;
 

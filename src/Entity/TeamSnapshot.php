@@ -19,7 +19,7 @@ class TeamSnapshot
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @Groups("lastMatches")
@@ -31,7 +31,7 @@ class TeamSnapshot
      * @Groups("lastMatches")
      * @ORM\Column(type="integer")
      */
-    private $score;
+    private ?int $score;
 
     /**
      * @ORM\ManyToOne(targetEntity=CalculatedMatch::class, inversedBy="teamSnapshots", cascade={"persist"})
@@ -42,13 +42,13 @@ class TeamSnapshot
      * @Groups("lastMatches")
      * @ORM\Column(type="float", nullable=true)
      */
-    private $ratingChange;
+    private ?float $ratingChange;
 
     /**
      * @Groups("lastMatches")
      * @ORM\Column(type="boolean")
      */
-    private $isRed;
+    private bool $isRed;
 
     public function __construct()
     {
@@ -90,12 +90,16 @@ class TeamSnapshot
         return $this;
     }
 
+    /**
+     * @Groups("lastMatches")
+     * @param bool $fillZeroes
+     * @return float|null
+     */
     public function getAvgTeamRating(bool $fillZeroes = false): ?float
     {
         return array_sum(
                 array_map(
                     fn ($v) => $fillZeroes ? ($v->getRating() ?? Player::$startingRating) : $v->getRating(), $this->getPlayerSnapshots()->toArray()
-
                 )
             ) / count($this->getPlayerSnapshots());
     }

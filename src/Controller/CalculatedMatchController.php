@@ -44,11 +44,10 @@ class CalculatedMatchController extends AbstractController
 
     #[Route('/getLastMatches', name: 'calculated_match_index_last', methods: ['GET'])]
     public function getLastMatches(
-        CalculatedMatchRepository $calculatedMatchRepository,
-        SerializerInterface $serializer,
+        CalculatedMatchRepository $calculatedMatchRepository
     ): JsonResponse
     {
-        $lastMatches = $calculatedMatchRepository->getLastMatches(2);
+        $lastMatches = $calculatedMatchRepository->getLastMatches(30);
 
         return $this->json($lastMatches,Response::HTTP_OK, [], ['groups' => 'lastMatches']);
     }

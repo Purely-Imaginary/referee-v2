@@ -148,11 +148,8 @@ class CalculatedMatch
 
     public function removeGoal(Goal $goal): self
     {
-        if ($this->goals->removeElement($goal)) {
-            // set the owning side to null (unless already changed)
-            if ($goal->getCalculatedMatch() === $this) {
-                $goal->setCalculatedMatch(null);
-            }
+        if ($this->goals->removeElement($goal) && $goal->getCalculatedMatch() === $this) {
+            $goal->setCalculatedMatch(null);
         }
 
         return $this;
@@ -178,11 +175,8 @@ class CalculatedMatch
 
     public function removePlayerSnapshot(PlayerSnapshot $playerSnapshot): self
     {
-        if ($this->playerSnapshots->removeElement($playerSnapshot)) {
-            // set the owning side to null (unless already changed)
-            if ($playerSnapshot->getCalculatedMatch() === $this) {
-                $playerSnapshot->setCalculatedMatch(null);
-            }
+        if ($this->playerSnapshots->removeElement($playerSnapshot) && $playerSnapshot->getCalculatedMatch() === $this) {
+            $playerSnapshot->setCalculatedMatch(null);
         }
 
         return $this;
@@ -208,11 +202,8 @@ class CalculatedMatch
 
     public function removeTeamSnapshot(TeamSnapshot $teamSnapshot): self
     {
-        if ($this->teamSnapshots->removeElement($teamSnapshot)) {
-            // set the owning side to null (unless already changed)
-            if ($teamSnapshot->getCalculatedMatch() === $this) {
-                $teamSnapshot->setCalculatedMatch(null);
-            }
+        if ($this->teamSnapshots->removeElement($teamSnapshot) && $teamSnapshot->getCalculatedMatch() === $this) {
+            $teamSnapshot->setCalculatedMatch(null);
         }
 
         return $this;
@@ -221,8 +212,9 @@ class CalculatedMatch
     #[Pure] public function getTeamSnapshot(bool $getRed): ?TeamSnapshot
     {
         foreach ($this->getTeamSnapshots() as $teamSnapshot) {
-            if ($teamSnapshot->isRed() === $getRed)
+            if ($teamSnapshot->isRed() === $getRed) {
                 return $teamSnapshot;
+            }
         }
 
         return null;

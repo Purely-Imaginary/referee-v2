@@ -189,11 +189,8 @@ class Player
 
     public function removePlayerSnapshot(PlayerSnapshot $playerSnapshot): self
     {
-        if ($this->playerSnapshots->removeElement($playerSnapshot)) {
-            // set the owning side to null (unless already changed)
-            if ($playerSnapshot->getPlayer() === $this) {
-                $playerSnapshot->setPlayer(null);
-            }
+        if ($this->playerSnapshots->removeElement($playerSnapshot) && $playerSnapshot->getPlayer() === $this) {
+            $playerSnapshot->setPlayer(null);
         }
 
         return $this;
@@ -219,11 +216,8 @@ class Player
 
     public function removeGoal(Goal $goal): self
     {
-        if ($this->goals->removeElement($goal)) {
-            // set the owning side to null (unless already changed)
-            if ($goal->getPlayer() === $this) {
-                $goal->setPlayer(null);
-            }
+        if ($this->goals->removeElement($goal) && $goal->getPlayer() === $this) {
+            $goal->setPlayer(null);
         }
 
         return $this;

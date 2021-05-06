@@ -80,11 +80,8 @@ class TeamSnapshot
 
     public function removePlayer(PlayerSnapshot $player): self
     {
-        if ($this->playerSnapshots->removeElement($player)) {
-            // set the owning side to null (unless already changed)
-            if ($player->getTeamSnapshot() === $this) {
-                $player->setTeamSnapshot(null);
-            }
+        if ($this->playerSnapshots->removeElement($player) && $player->getTeamSnapshot() === $this) {
+            $player->setTeamSnapshot(null);
         }
 
         return $this;

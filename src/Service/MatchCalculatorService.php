@@ -112,7 +112,7 @@ class MatchCalculatorService
         $powerPiece = pow(10, ($ratingDifference / 400));
         $winChance = (1 / (1 + $powerPiece));
 
-        if (($newCalculatedMatch->getTeamSnapshot(true)->getScore() + $newCalculatedMatch->getTeamSnapshot(false)->getScore() == 0)) {
+        if ($newCalculatedMatch->getTeamSnapshot(true)->getScore() + $newCalculatedMatch->getTeamSnapshot(false)->getScore() == 0) {
             return 0;
         }
         $scoreDifference = $newCalculatedMatch->getTeamSnapshot(true)->getScore() - $newCalculatedMatch->getTeamSnapshot(false)->getScore();

@@ -61,7 +61,7 @@ class Team
     {
         if (!$this->players->contains($player)) {
             $this->players[] = $player;
-            $player->setTeam($this);
+            $player->setTeamSnapshot($this);
         }
 
         return $this;
@@ -69,11 +69,8 @@ class Team
 
     public function removePlayer(PlayerSnapshot $player): self
     {
-        if ($this->players->removeElement($player)) {
-            // set the owning side to null (unless already changed)
-            if ($player->getTeam() === $this) {
-                $player->setTeam(null);
-            }
+        if ($this->players->removeElement($player) && $player->getTeamSnapshot() === $this) {
+            $player->setTeamSnapshot(null);
         }
 
         return $this;

@@ -34,6 +34,7 @@ class TeamSnapshot
     private ?int $score;
 
     /**
+     * @Groups("ratingChart")
      * @ORM\ManyToOne(targetEntity=CalculatedMatch::class, inversedBy="teamSnapshots", cascade={"persist"})
      */
     private $calculatedMatch;

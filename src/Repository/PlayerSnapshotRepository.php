@@ -18,4 +18,13 @@ class PlayerSnapshotRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PlayerSnapshot::class);
     }
+
+    /**
+     * @return PlayerSnapshot[]
+     */
+    public function getFilteredSnapshots(): array {
+        return $this->createQueryBuilder('ps')
+            ->where('ps.rating is not null')
+            ->getQuery()->getResult();
+    }
 }

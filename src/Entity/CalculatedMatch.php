@@ -25,7 +25,7 @@ class CalculatedMatch
     private ?int $id;
 
     /**
-     * @Groups("lastMatches")
+     * @Groups({"lastMatches", "ratingChart"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $time;

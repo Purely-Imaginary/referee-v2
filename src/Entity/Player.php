@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Player
 {
     public static int $unrankedMatchesAmount = 10;
-    public static int $startingRating = 1000;
+    public static int $startingRating = 1200;
     /**
      * @Groups("lastMatches")
      * @ORM\Id
@@ -24,7 +24,7 @@ class Player
     private $id;
 
     /**
-     * @Groups("lastMatches")
+     * @Groups({"lastMatches", "ratingChart"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
@@ -55,6 +55,7 @@ class Player
     private $goalsLost = 0;
 
     /**
+     * @Groups("ratingChart")
      * @ORM\Column(type="float", nullable=true)
      */
     private $rating = null;

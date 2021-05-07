@@ -16,7 +16,7 @@ class Player
     public static int $unrankedMatchesAmount = 10;
     public static int $startingRating = 1200;
     /**
-     * @Groups("lastMatches")
+     * @Groups({"lastMatches", "playersTable"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -24,38 +24,43 @@ class Player
     private $id;
 
     /**
-     * @Groups({"lastMatches", "ratingChart"})
+     * @Groups({"lastMatches", "ratingChart", "playersTable"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
+     * @Groups({"playersTable"})
      * @ORM\Column(type="integer", options={"default":0})
      */
     private $wins = 0;
 
     /**
+     * @Groups({"playersTable"})
      * @ORM\Column(type="integer", options={"default":0})
      */
     private $losses = 0;
 
     /**
+     * @Groups({"playersTable"})
      * @ORM\Column(type="integer", options={"default":0})
      */
     private $goalsShot = 0;
 
     /**
+     * @Groups({"playersTable"})
      * @ORM\Column(type="integer", options={"default":0})
      */
     private $goalsScored = 0;
 
     /**
+     * @Groups({"playersTable"})
      * @ORM\Column(type="integer", options={"default":0})
      */
     private $goalsLost = 0;
 
     /**
-     * @Groups("ratingChart")
+     * @Groups({"ratingChart", "playersTable"})
      * @ORM\Column(type="float", nullable=true)
      */
     private $rating = null;
@@ -237,5 +242,18 @@ class Player
     public function getTotalMatches(): int
     {
         return $this->getWins() + $this->getLosses();
+    }
+
+    /**
+     * @Groups({"playersTable"})
+     * @return int
+     */
+    public function getLastPlayed(): int
+    {
+        $lastPlayed = 0;
+        foreach ($this->getPlayerSnapshots() as $playerSnapshot) {
+            $lastPlayed = max($lastPlayed, strtotime($playerSnapshot->getTime()));
+        }
+        return $lastPlayed;
     }
 }

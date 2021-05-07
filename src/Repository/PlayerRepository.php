@@ -18,4 +18,16 @@ class PlayerRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Player::class);
     }
+
+    /**
+     * @return Player[]
+     */
+    public function getPlayersTableData(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.playerSnapshots', 'ps')
+            ->where('p.rating is not null')
+            ->orderBy('p.rating', 'DESC')
+            ->getQuery()->getResult();
+    }
 }

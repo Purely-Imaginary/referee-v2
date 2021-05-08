@@ -21,14 +21,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/calculatedMatch')]
 class CalculatedMatchController extends AbstractController
 {
-    #[Route('/', name: 'calculated_match_index', methods: ['GET'])]
-    public function index(CalculatedMatchRepository $calculatedMatchRepository): Response
-    {
-        return $this->render('calculated_match/index.html.twig', [
-            'calculated_matches' => $calculatedMatchRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'calculated_match_new', methods: ['GET', 'POST'])]
     public function new(Request $request, MatchCalculatorService $matchCalculator): Response
     {
@@ -50,5 +42,14 @@ class CalculatedMatchController extends AbstractController
         $lastMatches = $calculatedMatchRepository->getLastMatches(30);
 
         return $this->json($lastMatches,Response::HTTP_OK, [], ['groups' => 'lastMatches']);
+    }
+
+    #[Route('/getById/{calculatedMatch}', name: 'calculated_match_get_by_id', methods: ['GET'])]
+    public function getMatch(
+        CalculatedMatch $calculatedMatch,
+        CalculatedMatchRepository $calculatedMatchRepository
+    ): JsonResponse
+    {
+        return $this->json($calculatedMatch,Response::HTTP_OK, [], ['groups' => ['Default', 'matchDetails']]);
     }
 }

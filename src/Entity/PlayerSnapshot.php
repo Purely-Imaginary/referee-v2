@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PlayerSnapshotRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -19,34 +20,44 @@ class PlayerSnapshot
     private $id;
 
     /**
-     * @Groups({"lastMatches", "ratingChart"})
+     * @Groups({"lastMatches", "ratingChart", "matchDetails"})
      * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="playerSnapshots")
      * @ORM\JoinColumn(nullable=false)
      */
     private $player;
 
     /**
-     * @Groups({"lastMatches", "ratingChart"})
+     * @Groups({"lastMatches", "ratingChart", "matchDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
     private $rating = null;
 
     /**
-     * @Groups("lastMatches")
+     * @Groups("lastMatches", "matchDetails")
      * @ORM\Column(type="boolean")
      */
     private $isRed;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CalculatedMatch::class, inversedBy="playerSnapshots")
-     */
-    private $calculatedMatch;
-
-    /**
-     * @Groups("ratingChart")
+     * @Groups({"ratingChart"})
      * @ORM\ManyToOne(targetEntity=TeamSnapshot::class, inversedBy="players", cascade={"persist"})
      */
     private $teamSnapshot;
+
+    /**
+     * @Groups({"matchDetails"})
+     */
+    public function getGoalsAmount(): int
+    {
+        return count(
+            array_values(
+                array_filter(
+                    $this->getTeamSnapshot()->getCalculatedMatch()->getGoals()->toArray(),
+                    fn($v) => $v->getPlayer() === $this->getPlayer()
+                )
+            )
+        );
+    }
 
     public function getId(): ?int
     {
@@ -89,18 +100,6 @@ class PlayerSnapshot
         return $this;
     }
 
-    public function getCalculatedMatch(): ?CalculatedMatch
-    {
-        return $this->calculatedMatch;
-    }
-
-    public function setCalculatedMatch(?CalculatedMatch $calculatedMatch): self
-    {
-        $this->calculatedMatch = $calculatedMatch;
-
-        return $this;
-    }
-
     public function getTeamSnapshot(): ?TeamSnapshot
     {
         return $this->teamSnapshot;
@@ -114,7 +113,11 @@ class PlayerSnapshot
         return $this;
     }
 
-    public function getTime(): string {
+    /**
+     * @Groups({"playerDetails"})
+     * @return string
+     */
+    #[Pure] public function getTime(): string {
         return $this->getTeamSnapshot()->getCalculatedMatch()->getTime();
     }
 }

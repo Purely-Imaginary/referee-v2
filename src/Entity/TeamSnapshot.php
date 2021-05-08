@@ -22,13 +22,13 @@ class TeamSnapshot
     private ?int $id;
 
     /**
-     * @Groups("lastMatches")
+     * @Groups({"lastMatches", "matchDetails"})
      * @ORM\OneToMany(targetEntity=PlayerSnapshot::class, mappedBy="teamSnapshot")
      */
     private $playerSnapshots;
 
     /**
-     * @Groups("lastMatches")
+     * @Groups("lastMatches", "matchDetails")
      * @ORM\Column(type="integer")
      */
     private ?int $score;
@@ -40,13 +40,13 @@ class TeamSnapshot
     private $calculatedMatch;
 
     /**
-     * @Groups("lastMatches")
+     * @Groups("lastMatches", "matchDetails")
      * @ORM\Column(type="float", nullable=true)
      */
     private ?float $ratingChange;
 
     /**
-     * @Groups("lastMatches")
+     * @Groups("lastMatches", "matchDetails")
      * @ORM\Column(type="boolean")
      */
     private bool $isRed;
@@ -54,6 +54,20 @@ class TeamSnapshot
     public function __construct()
     {
         $this->playerSnapshots = new ArrayCollection();
+    }
+
+    /**
+     * @Groups("lastMatches", "matchDetails")
+     * @param bool $fillZeroes
+     * @return float|null
+     */
+    public function getAvgTeamRating(bool $fillZeroes = false): ?float
+    {
+        return array_sum(
+                array_map(
+                    fn ($v) => $fillZeroes ? ($v->getRating() ?? Player::$startingRating) : $v->getRating(), $this->getPlayerSnapshots()->toArray()
+                )
+            ) / count($this->getPlayerSnapshots());
     }
 
     public function getId(): ?int
@@ -86,20 +100,6 @@ class TeamSnapshot
         }
 
         return $this;
-    }
-
-    /**
-     * @Groups("lastMatches")
-     * @param bool $fillZeroes
-     * @return float|null
-     */
-    public function getAvgTeamRating(bool $fillZeroes = false): ?float
-    {
-        return array_sum(
-                array_map(
-                    fn ($v) => $fillZeroes ? ($v->getRating() ?? Player::$startingRating) : $v->getRating(), $this->getPlayerSnapshots()->toArray()
-                )
-            ) / count($this->getPlayerSnapshots());
     }
 
 

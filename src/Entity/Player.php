@@ -16,61 +16,57 @@ class Player
     public static int $unrankedMatchesAmount = 10;
     public static int $startingRating = 1200;
     /**
-     * @Groups({"lastMatches", "playersTable"})
+     * @Groups({"lastMatches", "playersTable", "matchDetails"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
-     * @Groups({"lastMatches", "ratingChart", "playersTable"})
+     * @Groups({"lastMatches", "ratingChart", "playersTable", "matchDetails", "playerDetails"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $name;
+    private ?string $name;
 
     /**
-     * @Groups({"playersTable"})
+     * @Groups({"playersTable", "playerDetails"})
      * @ORM\Column(type="integer", options={"default":0})
      */
-    private $wins = 0;
+    private int $wins = 0;
 
     /**
-     * @Groups({"playersTable"})
+     * @Groups({"playersTable", "playerDetails"})
      * @ORM\Column(type="integer", options={"default":0})
      */
-    private $losses = 0;
+    private int $losses = 0;
 
     /**
-     * @Groups({"playersTable"})
+     * @Groups({"playersTable", "playerDetails"})
      * @ORM\Column(type="integer", options={"default":0})
      */
-    private $goalsShot = 0;
+    private int $goalsScored = 0;
 
     /**
-     * @Groups({"playersTable"})
+     * @Groups({"playersTable", "playerDetails"})
      * @ORM\Column(type="integer", options={"default":0})
      */
-    private $goalsScored = 0;
+    private int $goalsLost = 0;
 
     /**
-     * @Groups({"playersTable"})
-     * @ORM\Column(type="integer", options={"default":0})
-     */
-    private $goalsLost = 0;
-
-    /**
-     * @Groups({"ratingChart", "playersTable"})
+     * @Groups({"ratingChart", "playersTable", "playerDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
-    private $rating = null;
+    private ?float $rating = null;
 
     /**
+     * @var PlayerSnapshot[]
      * @ORM\OneToMany(targetEntity=PlayerSnapshot::class, mappedBy="player", orphanRemoval=true)
      */
     private $playerSnapshots;
 
     /**
+     * @var Goal[]
      * @ORM\OneToMany(targetEntity=Goal::class, mappedBy="player", orphanRemoval=true)
      */
     private $goals;
@@ -79,6 +75,14 @@ class Player
     {
         $this->playerSnapshots = new ArrayCollection();
         $this->goals = new ArrayCollection();
+    }
+
+    /**
+     * @Groups({"playersTable", "playerDetails"})
+     */
+    public function getGoalsShot(): ?int
+    {
+        return $this->getGoals()->count();
     }
 
     public function getId(): ?int
@@ -118,18 +122,6 @@ class Player
     public function setLosses(int $losses): self
     {
         $this->losses = $losses;
-
-        return $this;
-    }
-
-    public function getGoalsShot(): ?int
-    {
-        return $this->goalsShot;
-    }
-
-    public function setGoalsShot(int $goalsShot): self
-    {
-        $this->goalsShot = $goalsShot;
 
         return $this;
     }

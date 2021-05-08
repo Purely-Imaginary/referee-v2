@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=CalculatedMatchRepository::class)
@@ -17,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 class CalculatedMatch
 {
     /**
-     * @Groups("lastMatches")
+     * @Groups({"lastMatches", "matchDetails"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -25,17 +24,19 @@ class CalculatedMatch
     private ?int $id;
 
     /**
-     * @Groups({"lastMatches", "ratingChart"})
+     * @Groups({"lastMatches", "ratingChart", "matchDetails"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $time;
 
     /**
+     * @Groups({"matchDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
     private ?float $startTime;
 
     /**
+     * @Groups({"matchDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
     private ?float $endTime;
@@ -46,6 +47,7 @@ class CalculatedMatch
     private ?string $rawPositions;
 
     /**
+     * @Groups({"matchDetails"})
      * @var Goal[]|Collection
      *
      * @ORM\OneToMany(targetEntity=Goal::class, mappedBy="calculatedMatch")
@@ -53,15 +55,7 @@ class CalculatedMatch
     private $goals;
 
     /**
-     * @var PlayerSnapshot[]|Collection
-     *
-     * @ORM\OneToMany(targetEntity=PlayerSnapshot::class, mappedBy="calculatedMatch")
-     */
-    private $playerSnapshots;
-
-    /**
-     * @Groups("lastMatches")
-     * @MaxDepth(1)
+     * @Groups("lastMatches", "matchDetails")
      * @var TeamSnapshot[]|Collection
      *
      * @ORM\OneToMany(targetEntity=TeamSnapshot::class, mappedBy="calculatedMatch")
@@ -71,7 +65,6 @@ class CalculatedMatch
     #[Pure] public function __construct()
     {
         $this->goals = new ArrayCollection();
-        $this->playerSnapshots = new ArrayCollection();
         $this->teamSnapshots = new ArrayCollection();
     }
 
@@ -150,33 +143,6 @@ class CalculatedMatch
     {
         if ($this->goals->removeElement($goal) && $goal->getCalculatedMatch() === $this) {
             $goal->setCalculatedMatch(null);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|PlayerSnapshot[]
-     */
-    public function getPlayerSnapshots()
-    {
-        return $this->playerSnapshots;
-    }
-
-    public function addPlayerSnapshot(PlayerSnapshot $playerSnapshot): self
-    {
-        if (!$this->playerSnapshots->contains($playerSnapshot)) {
-            $this->playerSnapshots[] = $playerSnapshot;
-            $playerSnapshot->setCalculatedMatch($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlayerSnapshot(PlayerSnapshot $playerSnapshot): self
-    {
-        if ($this->playerSnapshots->removeElement($playerSnapshot) && $playerSnapshot->getCalculatedMatch() === $this) {
-            $playerSnapshot->setCalculatedMatch(null);
         }
 
         return $this;

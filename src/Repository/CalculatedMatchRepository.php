@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\CalculatedMatch;
+use App\Entity\Player;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -29,5 +30,30 @@ class CalculatedMatchRepository extends ServiceEntityRepository
             ->getQuery()
             ->setMaxResults($amount)
             ->getResult();
+    }
+
+    /**
+     * @return CalculatedMatch[]
+     */
+    public function getPlayerMatches(Player $player)
+    {
+        return $this->createQueryBuilder('cm')
+            ->join('cm.teamSnapshots', 'ts')
+            ->join('ts.playerSnapshots','ps')
+            ->where('ps.player = :player')
+            ->setParameter(':player', $player)
+            ->orderBy('cm.time', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getLastMatchId(): int
+    {
+        return $this->createQueryBuilder('cm')
+            ->select('cm.id')
+            ->orderBy('cm.id', 'DESC')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getSingleScalarResult();
     }
 }

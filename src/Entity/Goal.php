@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\GoalRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=GoalRepository::class)
@@ -15,43 +16,49 @@ class Goal
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
+     * @Groups({"matchDetails"})
      * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="goals")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $player;
+    private ?Player $player;
 
     /**
      * @ORM\ManyToOne(targetEntity=CalculatedMatch::class, inversedBy="goals")
      */
-    private $calculatedMatch;
+    private ?CalculatedMatch $calculatedMatch;
 
     /**
+     * @Groups({"matchDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
-    private $time;
+    private ?float $time;
 
     /**
+     * @Groups({"matchDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
-    private $travelTime;
+    private ?float $travelTime;
 
     /**
+     * @Groups({"matchDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
-    private $speed;
+    private ?float $speed;
 
     /**
+     * @Groups({"matchDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
-    private $shotTime;
+    private ?float $shotTime;
 
     /**
+     * @Groups({"matchDetails"})
      * @ORM\Column(type="boolean")
      */
-    private $isRed;
+    private ?bool $isRed;
 
     public function getId(): ?int
     {

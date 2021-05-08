@@ -22,9 +22,10 @@ class RawMatchController extends AbstractController
         KernelInterface $kernel,
         CalculatedMatchRepository $calculatedMatchRepository
     ): Response {
-        /** @var UploadedFile $a */
-        $a = $request->files->get("file");
-        file_put_contents(RegenerateCommand::$unparsedFilesDir . '/' . $a->getClientOriginalName(), $a->getContent());
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get("file");
+
+        file_put_contents(RegenerateCommand::$unparsedFilesDir . '/' . filter_var($uploadedFile->getClientOriginalName(), FILTER_SANITIZE_STRING), $uploadedFile->getContent());
 
         $application = new Application($kernel);
         $application->setAutoExit(false);

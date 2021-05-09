@@ -61,7 +61,7 @@ class TeamSnapshot
      * @param bool $fillZeroes
      * @return float|null
      */
-    public function getAvgTeamRating(bool $fillZeroes = false): ?float
+    public function getAvgTeamRating(bool $fillZeroes = true): ?float
     {
         return array_sum(
                 array_map(
@@ -154,5 +154,10 @@ class TeamSnapshot
     public function getEnemyTeam(): TeamSnapshot
     {
         return $this->getCalculatedMatch()->getTeamSnapshot(!$this->isRed());
+    }
+
+    public function getNiceRatingChange(int $round = 1): string
+    {
+        return ($this->getRatingChange() >= 0 ? '+' : '') . round($this->getRatingChange(), $round);
     }
 }

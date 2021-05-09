@@ -108,7 +108,7 @@ class MatchCalculatorService
             return 0;
         }
 
-        $ratingDifference = $newCalculatedMatch->getTeamSnapshot(false)->getAvgTeamRating(true) - $newCalculatedMatch->getTeamSnapshot(true)->getAvgTeamRating(true);
+        $ratingDifference = $newCalculatedMatch->getTeamSnapshot(false)->getAvgTeamRating() - $newCalculatedMatch->getTeamSnapshot(true)->getAvgTeamRating();
         $powerPiece = pow(10, ($ratingDifference / 400));
         $winChance = (1 / (1 + $powerPiece));
 
@@ -187,7 +187,7 @@ class MatchCalculatorService
     }
 
     function estimateRating(Player $player, TeamSnapshot $teamSnapshot): float {
-        $ratingForTie = $teamSnapshot->getPlayerSnapshots()->count() * $teamSnapshot->getEnemyTeam()->getAvgTeamRating(true);
+        $ratingForTie = $teamSnapshot->getPlayerSnapshots()->count() * $teamSnapshot->getEnemyTeam()->getAvgTeamRating();
         foreach ($teamSnapshot->getPlayerSnapshots() as $playerSnapshot) {
             if ($playerSnapshot->getPlayer() !== $player) {
                 $ratingForTie -= $playerSnapshot->getRating() ?? Player::$startingRating;

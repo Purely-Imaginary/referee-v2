@@ -190,4 +190,33 @@ class CalculatedMatch
     {
         return $this->getTeamSnapshot(true)->getScore() > $this->getTeamSnapshot(false)->getScore();
     }
+
+    public function getNiceEndTime($preformatted = true): string {
+        $timeString = $this->getNiceTime($this->getEndTime());
+        return $preformatted ? ($timeString !== "10:00" ? '**' : '') . $timeString . ($timeString !== "10:00" ? '**' : '') : $timeString;
+    }
+
+    public function getNiceTime(float $seconds): string {
+        $seconds = (int)floor($seconds);
+
+        return floor($seconds / 60) . ":" . ($seconds % 60 < 10 ? '0' . $seconds % 60 : $seconds % 60);
+    }
+
+    /**
+     * @return array<Goal,int>
+     */
+    public function getFastestGoal(): array
+    {
+        $prevTime = 0;
+        $minTime = 6000;
+        $bestGoal = "";
+        foreach ($this->getGoals() as $goal) {
+            if ($goal->getTime() - $prevTime < $minTime) {
+                $minTime = $goal->getTime() - $prevTime;
+                $bestGoal = $goal;
+            }
+            $prevTime = $goal->getTime();
+        }
+        return [$bestGoal, $minTime];
+    }
 }

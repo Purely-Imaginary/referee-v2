@@ -10,9 +10,11 @@ use App\Entity\TeamSnapshot;
 use App\Repository\CalculatedMatchRepository;
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Traits\NiceRatingTrait;
 
 class MatchCalculatorService
 {
+    use NiceRatingTrait;
     public static int $kCoefficient = 250;
 
     public function __construct(
@@ -23,7 +25,7 @@ class MatchCalculatorService
     ) {
     }
 
-    public function process(array $data)
+    public function process(array $data): ?CalculatedMatch
     {
         if ($this->isInDB($data['rawPositionsAtEnd'])) {
             return null;
@@ -93,10 +95,8 @@ class MatchCalculatorService
         $goal = (new Goal())
             ->setPlayer($this->playerRepository->findOneBy(['name' => $rawGoal['goalScorerName']]))
             ->setIsRed(strtolower($rawGoal['goalSide']) === 'red')
-            ->setShotTime($rawGoal['goalShotTime'])
             ->setSpeed($rawGoal['goalSpeed'])
-            ->setTime($rawGoal['goalTime'])
-            ->setTravelTime($rawGoal['goalTravelTime']);
+            ->setTime($rawGoal['goalTime']);
         $this->entityManager->persist($goal);
 
         return $goal;
@@ -197,5 +197,67 @@ class MatchCalculatorService
         $estimatedRatingChangeForRed = $teamSnapshot->isRed() ? $estimatedRatingChangeForRed : -$estimatedRatingChangeForRed;
 
         return $ratingForTie + ($estimatedRatingChangeForRed * 40);
+    }
+
+    public function generateDiscordEmbed(CalculatedMatch $cm): array
+    {
+        $result = [
+            'tts' => false,
+            'embeds' => [],
+            'content' => "New match has been uploaded!"
+        ];
+        $result['embeds'][] = [
+            "url" => "https://purely-imaginary.github.io/#/showMatch/" . $cm->getId(),
+            "title" => "Match results!",
+            "description" => $this->matchToDescription($cm)
+        ];
+        $result['embeds'][] = [
+            "color" => 14177041,
+            "description" => $this->teamToDescription($cm->getTeamSnapshot(true))
+        ];
+
+        $result['embeds'][] = [
+            "color" => 1127128,
+            "description" => $this->teamToDescription($cm->getTeamSnapshot(false))
+        ];
+
+        return $result;
+    }
+
+    private function matchToDescription(CalculatedMatch $cm): string {
+        $matchData[] = "**". ($cm->didRedWon() ? 'Red' : 'Blue') . " wins!**";
+        $matchData[] = '**' . $cm->getTeamSnapshot(true)->getScore() . ' : ' . $cm->getTeamSnapshot(false)->getScore() . '**';
+        $matchData[] = "\nMatch length: " . $cm->getNiceEndTime();
+
+        $fastestGoal = $cm->getFastestGoal();
+        if ($fastestGoal[1] < 5) {
+            /** @var $fastestGoal <Goal, int> */
+            $matchData[] =
+                'Blitzkrieg Order goes to **' .
+                $fastestGoal[0]->getPlayer()->getName() .
+                "** for fastest goal: **" .
+                $fastestGoal[1] .
+                '** seconds from whistle at ' .
+                $cm->getNiceTime($fastestGoal[0]->getTime()) .
+                "!";
+        }
+        //TODO: Player's rating table with justify
+        //TODO: Player events (new best rating, position change)
+        return implode("\n", $matchData);
+    }
+
+    private function teamToDescription(TeamSnapshot $ts): string
+    {
+        $teamData = ['**' . ($ts->isRed() ? 'RED' : 'BLUE') . " TEAM:**\n"];
+        $teamData[] = "Average rating: **" . round($ts->getAvgTeamRating()) . '**';
+        $teamData[] = $ts->getRatingChange() === 0.0 ?
+            "NEW PLAYERS IN MATCH - NO POINTS HAS BEEN GIVEN" :
+            "Rating change: **". $ts->getNiceRatingChange() . "**";
+        foreach ($ts->getPlayerSnapshots() as $playerSnapshot) {
+            $teamData[] = "`" . $playerSnapshot->getPlayer()->getName() .
+                "`: " . $playerSnapshot->getNiceRating(0) .
+                " -> " . $playerSnapshot->getPlayer()->getNiceRating(0);
+        }
+        return implode("\n", $teamData);
     }
 }

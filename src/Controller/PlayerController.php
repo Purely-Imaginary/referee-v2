@@ -23,7 +23,7 @@ class PlayerController extends AbstractController
     public function index(): Response
     {
         $playersData = $this->playerRepository->getPlayersTableData();
-        $monthAgo = strtotime(date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . "-1 month")));
+        $monthAgo = strtotime(date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . "-91 month")));
         $playersData = array_filter($playersData, fn ($v) => $v->getLastPlayed() > $monthAgo);
 
         return $this->json(array_values($playersData), 200, [], ['groups' => 'playersTable']);

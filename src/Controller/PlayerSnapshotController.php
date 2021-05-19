@@ -25,7 +25,7 @@ class PlayerSnapshotController extends AbstractController
             $lastMatch[$filteredSnapshot->getPlayer()->getId()] = max(strtotime($filteredSnapshot->getTime()), $lastMatch[$filteredSnapshot->getPlayer()->getId()] ?? 0);
         }
 
-        $monthAgo = strtotime(date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . "-1 month")));
+        $monthAgo = strtotime(date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . "-91 month")));
         foreach ($filteredSnapshots as $filteredSnapshot) {
             if ($lastMatch[$filteredSnapshot->getPlayer()->getId()] > $monthAgo) {
                 $dayNormalized[$filteredSnapshot->getPlayer()->getId() . '-' . substr($filteredSnapshot->getTime(), 0, 10)] = $filteredSnapshot;

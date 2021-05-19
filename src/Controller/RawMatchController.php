@@ -55,25 +55,6 @@ class RawMatchController extends AbstractController
 
     private function generateDiscordEmbed(CalculatedMatch $cm): array
     {
-        /**
-         *
-         * {
-         * "tts": false,
-         * "embeds": [{
-         * "description": "**-45.65**\n`Amman`: *1200 -> 1150*\n`Amman`: 1300 -> 1250\n**Amman**: 1400 -> 1350\n",
-         * "color": 14177041
-         * },{
-         * "description": "**Panda**, **Panda**, **Panda**\n*+45.65*",
-         * "color": 1127128
-         * },{
-         * "url": "https://purely-imaginary.github.io/#/showMatch/557",
-         * "title": "Match results!",
-         * "description": "**5** : **10**\n\n Congratulations for **Panda** - new best rating of 1700!\n Congratulations for **Amman** - climbed to 3rd place!"
-         * }],
-         * "content": "New match has been uploaded!"
-         * }
-         */
-
         $result = [
             'tts' => false,
             'embeds' => [],

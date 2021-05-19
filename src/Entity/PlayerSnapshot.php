@@ -5,8 +5,8 @@ namespace App\Entity;
 use App\Repository\PlayerSnapshotRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
-use NiceRatingTrait;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Traits\NiceRatingTrait;
 
 /**
  * @ORM\Entity(repositoryClass=PlayerSnapshotRepository::class)

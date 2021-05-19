@@ -84,4 +84,4 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash
 
 WORKDIR /var/www
 
-EXPOSE 9000
+EXPOSE 9123

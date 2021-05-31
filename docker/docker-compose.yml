@@ -24,6 +24,7 @@ services:
       - ./logs/nginx:/var/log/nginx
     ports:
       - "80:80"
+      - "433:433"
 
   db:
     container_name: referee_db

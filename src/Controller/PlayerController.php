@@ -36,7 +36,7 @@ class PlayerController extends AbstractController
             [
                 'player' => $player,
                 'matchHistory' => $this->calculatedMatchRepository->getPlayerMatches($player),
-                'snapshots' => $this->playerSnapshotRepository->findBy(['player' => $player], ['id' => 'DESC']),
+                'snapshots' => $this->playerSnapshotRepository->findBy(['player' => $player], ['id' => 'ASC']),
                 'playerRatings' => $this->playerRepository->getPlayersTableData()
             ],
             200,

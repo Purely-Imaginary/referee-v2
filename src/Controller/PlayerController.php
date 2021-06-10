@@ -47,7 +47,7 @@ class PlayerController extends AbstractController
         );
     }
 
-    #[Route('/findTeams', name: 'find_teams', methods: ['GET'])]
+    #[Route('/findTeams', name: 'findTeams', methods: ['GET'])]
     public function getTeamsFromPlayerList(
         Request $request,
         PlayerRepository $playerRepository

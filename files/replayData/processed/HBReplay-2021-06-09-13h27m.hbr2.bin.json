@@ -1,0 +1,142 @@
+{
+    "gameTime": 547.2,
+    "goalsData": [
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 85.733,
+            "goalSide": "Red",
+            "goalSpeed": 5.25,
+            "goalTime": 86.333,
+            "goalTravelTime": 0.6
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 99.183,
+            "goalSide": "Blue",
+            "goalSpeed": 1.227,
+            "goalTime": 101.733,
+            "goalTravelTime": 2.55
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 149.167,
+            "goalSide": "Red",
+            "goalSpeed": 4.936,
+            "goalTime": 149.583,
+            "goalTravelTime": 0.416
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 215.05,
+            "goalSide": "Red",
+            "goalSpeed": 5.936,
+            "goalTime": 215.583,
+            "goalTravelTime": 0.533
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 242.033,
+            "goalSide": "Red",
+            "goalSpeed": 2.851,
+            "goalTime": 243.0,
+            "goalTravelTime": 0.967
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 253.633,
+            "goalSide": "Red",
+            "goalSpeed": 4.718,
+            "goalTime": 254.333,
+            "goalTravelTime": 0.7
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 278.5,
+            "goalSide": "Red",
+            "goalSpeed": 4.157,
+            "goalTime": 278.917,
+            "goalTravelTime": 0.417
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 304.9,
+            "goalSide": "Blue",
+            "goalSpeed": 1.89,
+            "goalTime": 306.95,
+            "goalTravelTime": 2.05
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 316.233,
+            "goalSide": "Red",
+            "goalSpeed": 4.051,
+            "goalTime": 316.733,
+            "goalTravelTime": 0.5
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 322.083,
+            "goalSide": "Blue",
+            "goalSpeed": 4.183,
+            "goalTime": 322.633,
+            "goalTravelTime": 0.55
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 372.367,
+            "goalSide": "Red",
+            "goalSpeed": 4.594,
+            "goalTime": 372.5,
+            "goalTravelTime": 0.133
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 456.233,
+            "goalSide": "Blue",
+            "goalSpeed": 1.872,
+            "goalTime": 457.867,
+            "goalTravelTime": 1.634
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 500.617,
+            "goalSide": "Blue",
+            "goalSpeed": 3.524,
+            "goalTime": 501.65,
+            "goalTravelTime": 1.033
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 540.0,
+            "goalSide": "Red",
+            "goalSpeed": 3.223,
+            "goalTime": 540.517,
+            "goalTravelTime": 0.517
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 546.383,
+            "goalSide": "Red",
+            "goalSpeed": 2.832,
+            "goalTime": 547.2,
+            "goalTravelTime": 0.817
+        }
+    ],
+    "rawPositionsAtEnd": "149.94539191194824--62.96983360598407|283.7997997660173-68.08042558009504|182.56597542018312-3.6498103758102203|365.33214009729073-21.17863182842069|",
+    "score": {
+        "Blue": 5,
+        "Red": 10
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "Amman",
+            "adamaru"
+        ],
+        "Red": [
+            "hubigz",
+            "Nelson Mandela"
+        ]
+    },
+    "time": "2021-06-09 13:27"
+}

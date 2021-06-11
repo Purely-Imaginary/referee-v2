@@ -1,0 +1,78 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 60.267,
+            "goalSide": "Blue",
+            "goalSpeed": 1.449,
+            "goalTime": 62.15,
+            "goalTravelTime": 1.883
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 112.217,
+            "goalSide": "Red",
+            "goalSpeed": 3.588,
+            "goalTime": 112.683,
+            "goalTravelTime": 0.466
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 129.317,
+            "goalSide": "Red",
+            "goalSpeed": 1.807,
+            "goalTime": 131.367,
+            "goalTravelTime": 2.05
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 302.283,
+            "goalSide": "Red",
+            "goalSpeed": 4.462,
+            "goalTime": 303.1,
+            "goalTravelTime": 0.817
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 329.767,
+            "goalSide": "Red",
+            "goalSpeed": 3.091,
+            "goalTime": 330.483,
+            "goalTravelTime": 0.716
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 425.433,
+            "goalSide": "Red",
+            "goalSpeed": 1.53,
+            "goalTime": 427.817,
+            "goalTravelTime": 2.384
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 521.067,
+            "goalSide": "Red",
+            "goalSpeed": 1.819,
+            "goalTime": 521.467,
+            "goalTravelTime": 0.4
+        }
+    ],
+    "rawPositionsAtEnd": "-358.86145475154706-7.122939203820005|-314.83526403760476-18.801786306272884|-347.7014100877634-80.2789856495916|-126.26981452088769-10.0233801703495|",
+    "score": {
+        "Blue": 1,
+        "Red": 6
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "ToPP",
+            "MaddoHatto"
+        ],
+        "Red": [
+            "hubigz",
+            "adamaru"
+        ]
+    },
+    "time": "2021-06-07 15:32"
+}

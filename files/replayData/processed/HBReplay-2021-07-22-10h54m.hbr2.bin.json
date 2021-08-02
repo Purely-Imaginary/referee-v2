@@ -1,0 +1,118 @@
+{
+    "gameTime": 328.783,
+    "goalsData": [
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 24.583,
+            "goalSide": "Blue",
+            "goalSpeed": 3.137,
+            "goalTime": 26.367,
+            "goalTravelTime": 1.784
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 54.05,
+            "goalSide": "Blue",
+            "goalSpeed": 2.404,
+            "goalTime": 57.667,
+            "goalTravelTime": 3.617
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 73.35,
+            "goalSide": "Blue",
+            "goalSpeed": 4.628,
+            "goalTime": 73.517,
+            "goalTravelTime": 0.167
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 111.767,
+            "goalSide": "Blue",
+            "goalSpeed": 4.988,
+            "goalTime": 112.3,
+            "goalTravelTime": 0.533
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 123.317,
+            "goalSide": "Blue",
+            "goalSpeed": 2.971,
+            "goalTime": 124.433,
+            "goalTravelTime": 1.116
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 148.467,
+            "goalSide": "Red",
+            "goalSpeed": 2.537,
+            "goalTime": 149.35,
+            "goalTravelTime": 0.883
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 155.2,
+            "goalSide": "Blue",
+            "goalSpeed": 8.349,
+            "goalTime": 155.533,
+            "goalTravelTime": 0.333
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 162.567,
+            "goalSide": "Blue",
+            "goalSpeed": 2.399,
+            "goalTime": 163.85,
+            "goalTravelTime": 1.283
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 204.167,
+            "goalSide": "Red",
+            "goalSpeed": 1.893,
+            "goalTime": 204.8,
+            "goalTravelTime": 0.633
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 273.717,
+            "goalSide": "Blue",
+            "goalSpeed": 2.841,
+            "goalTime": 274.817,
+            "goalTravelTime": 1.1
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 289.9,
+            "goalSide": "Blue",
+            "goalSpeed": 2.429,
+            "goalTime": 291.333,
+            "goalTravelTime": 1.433
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 327.083,
+            "goalSide": "Blue",
+            "goalSpeed": 1.85,
+            "goalTime": 328.783,
+            "goalTravelTime": 1.7
+        }
+    ],
+    "rawPositionsAtEnd": "-333.13275290156474--24.62136838852118|-10.46138781070856--23.29175471473928|-192.64263211712097--29.707731092382367|-162.4330910887135--25.53749357086996|",
+    "score": {
+        "Blue": 10,
+        "Red": 2
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "Amman",
+            "hubigz"
+        ],
+        "Red": [
+            "adamaru",
+            "ToPP"
+        ]
+    },
+    "time": "2021-07-22 10:54"
+}

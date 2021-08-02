@@ -1,0 +1,54 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 38.767,
+            "goalSide": "Red",
+            "goalSpeed": 3.664,
+            "goalTime": 39.183,
+            "goalTravelTime": 0.416
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 152.217,
+            "goalSide": "Red",
+            "goalSpeed": 1.346,
+            "goalTime": 154.4,
+            "goalTravelTime": 2.183
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 240.083,
+            "goalSide": "Blue",
+            "goalSpeed": 3.025,
+            "goalTime": 241.383,
+            "goalTravelTime": 1.3
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 525.1,
+            "goalSide": "Red",
+            "goalSpeed": 1.381,
+            "goalTime": 526.967,
+            "goalTravelTime": 1.867
+        }
+    ],
+    "rawPositionsAtEnd": "61.607624205594355--73.63286911126774|-25.688613602788827-100.58445543318255|0.9412319723232108--35.454380080871|-171.828565991842--25.31840162449007|",
+    "score": {
+        "Blue": 1,
+        "Red": 3
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "Amman",
+            "hubigz"
+        ],
+        "Red": [
+            "ToPP",
+            "Nelson Mandela"
+        ]
+    },
+    "time": "2021-07-22 13:31"
+}

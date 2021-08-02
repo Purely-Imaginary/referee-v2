@@ -1,0 +1,111 @@
+{
+    "gameTime": 420.017,
+    "goalsData": [
+        {
+            "goalScorerName": "F4lle\u042f",
+            "goalShotTime": 19.717,
+            "goalSide": "Blue",
+            "goalSpeed": 4.316,
+            "goalTime": 20.833,
+            "goalTravelTime": 1.116
+        },
+        {
+            "goalScorerName": "D\u0347\u0365\u03474\u0347b\u0347z\u0347\u0363\u0347z\u0347\u036b\u0347",
+            "goalShotTime": 47.483,
+            "goalSide": "Red",
+            "goalSpeed": 1.792,
+            "goalTime": 49.567,
+            "goalTravelTime": 2.084
+        },
+        {
+            "goalScorerName": "D\u0347\u0365\u03474\u0347b\u0347z\u0347\u0363\u0347z\u0347\u036b\u0347",
+            "goalShotTime": 144.067,
+            "goalSide": "Red",
+            "goalSpeed": 4.903,
+            "goalTime": 144.133,
+            "goalTravelTime": 0.066
+        },
+        {
+            "goalScorerName": "so easy game for me",
+            "goalShotTime": 174.433,
+            "goalSide": "Blue",
+            "goalSpeed": 5.876,
+            "goalTime": 175.1,
+            "goalTravelTime": 0.667
+        },
+        {
+            "goalScorerName": "F4lle\u042f",
+            "goalShotTime": 197.067,
+            "goalSide": "Blue",
+            "goalSpeed": 4.859,
+            "goalTime": 198.067,
+            "goalTravelTime": 1.0
+        },
+        {
+            "goalScorerName": "M\u0332e\u0332\u0365\u0332s\u0332s\u0332\u0363\u0332i\u0332\u036b\u0332o\u0332",
+            "goalShotTime": 206.1,
+            "goalSide": "Red",
+            "goalSpeed": 5.111,
+            "goalTime": 206.967,
+            "goalTravelTime": 0.867
+        },
+        {
+            "goalScorerName": "M\u0332e\u0332\u0365\u0332s\u0332s\u0332\u0363\u0332i\u0332\u036b\u0332o\u0332",
+            "goalShotTime": 327.717,
+            "goalSide": "Red",
+            "goalSpeed": 2.813,
+            "goalTime": 328.95,
+            "goalTravelTime": 1.233
+        },
+        {
+            "goalScorerName": "D\u0347\u0365\u03474\u0347b\u0347z\u0347\u0363\u0347z\u0347\u036b\u0347",
+            "goalShotTime": 334.483,
+            "goalSide": "Red",
+            "goalSpeed": 5.205,
+            "goalTime": 336.0,
+            "goalTravelTime": 1.517
+        },
+        {
+            "goalScorerName": "M\u0332e\u0332\u0365\u0332s\u0332s\u0332\u0363\u0332i\u0332\u036b\u0332o\u0332",
+            "goalShotTime": 376.833,
+            "goalSide": "Red",
+            "goalSpeed": 2.44,
+            "goalTime": 378.967,
+            "goalTravelTime": 2.134
+        },
+        {
+            "goalScorerName": "so easy game for me",
+            "goalShotTime": 230.783,
+            "goalSide": "Red",
+            "goalSpeed": 4.065,
+            "goalTime": 231.983,
+            "goalTravelTime": 1.2
+        },
+        {
+            "goalScorerName": "so easy game for me",
+            "goalShotTime": 257.717,
+            "goalSide": "Red",
+            "goalSpeed": 7.29,
+            "goalTime": 257.933,
+            "goalTravelTime": 0.216
+        }
+    ],
+    "rawPositionsAtEnd": "301.93728970624846-91.81031748093207|188.7653237542727-179.90492300090554|377.15106418697496-75.76623023345594|80.04371253390077-17.978777850886303|382.36694967083315-105.4727495631496|127.89102807372971-163.57001116005884|",
+    "score": {
+        "Blue": 3,
+        "Red": 8
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "D\u0347\u0365\u03474\u0347b\u0347z\u0347\u0363\u0347z\u0347\u036b\u0347",
+            "M\u0332e\u0332\u0365\u0332s\u0332s\u0332\u0363\u0332i\u0332\u036b\u0332o\u0332"
+        ],
+        "Red": [
+            "so easy game for me",
+            "aimar",
+            "mladen"
+        ]
+    },
+    "time": "2021-05-10 22:20"
+}

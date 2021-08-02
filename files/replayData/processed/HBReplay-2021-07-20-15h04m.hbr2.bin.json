@@ -1,0 +1,86 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 89.533,
+            "goalSide": "Red",
+            "goalSpeed": 4.693,
+            "goalTime": 89.65,
+            "goalTravelTime": 0.117
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 315.967,
+            "goalSide": "Blue",
+            "goalSpeed": 1.651,
+            "goalTime": 318.117,
+            "goalTravelTime": 2.15
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 323.917,
+            "goalSide": "Red",
+            "goalSpeed": 2.162,
+            "goalTime": 325.267,
+            "goalTravelTime": 1.35
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 362.167,
+            "goalSide": "Blue",
+            "goalSpeed": 3.127,
+            "goalTime": 363.083,
+            "goalTravelTime": 0.916
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 425.1,
+            "goalSide": "Blue",
+            "goalSpeed": 4.574,
+            "goalTime": 425.267,
+            "goalTravelTime": 0.167
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 484.1,
+            "goalSide": "Red",
+            "goalSpeed": 6.36,
+            "goalTime": 485.917,
+            "goalTravelTime": 1.817
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 588.633,
+            "goalSide": "Blue",
+            "goalSpeed": 2.53,
+            "goalTime": 589.733,
+            "goalTravelTime": 1.1
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 594.45,
+            "goalSide": "Blue",
+            "goalSpeed": 3.671,
+            "goalTime": 595.4,
+            "goalTravelTime": 0.95
+        }
+    ],
+    "rawPositionsAtEnd": "-154.46018454314014--76.62071973827624|-289.2875006891525--122.10659288194651|34.47941436421808--185.0|",
+    "score": {
+        "Blue": 5,
+        "Red": 3
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "ToPP",
+            "hubigz"
+        ],
+        "Red": [
+            "Nelson Mandela",
+            "Amman"
+        ]
+    },
+    "time": "2021-07-20 15:04"
+}

@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use GuzzleHttp\Client;
@@ -21,8 +22,9 @@ use GuzzleHttp\Client;
 class RawMatchController extends AbstractController
 {
 
-    public function __construct(protected string $DISCORD_WEBHOOK_URL)
-    {
+    public function __construct(
+        protected string $DISCORD_WEBHOOK_URL
+    ) {
     }
 
     #[Route('/raw/match', name: 'raw_match')]
@@ -33,7 +35,7 @@ class RawMatchController extends AbstractController
     ): Response {
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get("file");
-        file_put_contents(RegenerateCommand::$unparsedFilesDir . '/' . filter_var($uploadedFile->getClientOriginalName(), FILTER_SANITIZE_STRING), $uploadedFile->getContent());
+        file_put_contents(RegenerateCommand::$unparsedFilesDir.'/'.filter_var($uploadedFile->getClientOriginalName(), FILTER_SANITIZE_STRING), $uploadedFile->getContent());
 
         $application = new Application($kernel);
         $application->setAutoExit(false);
@@ -61,7 +63,7 @@ class RawMatchController extends AbstractController
             'content' => "New match has been uploaded!"
         ];
         $result['embeds'][] = [
-            "url" => "https://purely-imaginary.github.io/#/showMatch/" . $cm->getId(),
+            "url" => "https://purely-imaginary.github.io/#/showMatch/".$cm->getId(),
             "title" => "Match results!",
             "description" => $this->matchToDescription($cm)
         ];
@@ -78,21 +80,22 @@ class RawMatchController extends AbstractController
         return $result;
     }
 
-    private function matchToDescription(CalculatedMatch $cm): string {
-        $matchData[] = "**". ($cm->didRedWon() ? 'Red' : 'Blue') . " wins!**";
-        $matchData[] = '**' . $cm->getTeamSnapshot(true)->getScore() . ' : ' . $cm->getTeamSnapshot(false)->getScore() . '**';
-        $matchData[] = "\nMatch length: " . $cm->getNiceEndTime();
+    private function matchToDescription(CalculatedMatch $cm): string
+    {
+        $matchData[] = "**".($cm->didRedWon() ? 'Red' : 'Blue')." wins!**";
+        $matchData[] = '**'.$cm->getTeamSnapshot(true)->getScore().' : '.$cm->getTeamSnapshot(false)->getScore().'**';
+        $matchData[] = "\nMatch length: ".$cm->getNiceEndTime();
 
         $fastestGoal = $cm->getFastestGoal();
         if ($fastestGoal[1] < 5) {
             /** @var $fastestGoal <Goal, int> */
             $matchData[] =
-                'Blitzkrieg Order goes to **' .
-                $fastestGoal[0]->getPlayer()->getName() .
-                "** for fastest goal: **" .
-                $fastestGoal[1] .
-                '** seconds from whistle at ' .
-                $cm->getNiceTime($fastestGoal[0]->getTime()) .
+                'Blitzkrieg Order goes to **'.
+                $fastestGoal[0]->getPlayer()->getName().
+                "** for fastest goal: **".
+                $fastestGoal[1].
+                '** seconds from whistle at '.
+                $cm->getNiceTime($fastestGoal[0]->getTime()).
                 "!";
         }
         //TODO: Player's rating table with justify
@@ -102,17 +105,42 @@ class RawMatchController extends AbstractController
 
     private function teamToDescription(TeamSnapshot $ts): string
     {
-        $teamData = ['**' . ($ts->isRed() ? 'RED' : 'BLUE') . " TEAM:**\n"];
-        $teamData[] = "Average rating: **" . round($ts->getAvgTeamRating()) . '**';
+        $teamData = ['**'.($ts->isRed() ? 'RED' : 'BLUE')." TEAM:**\n"];
+        $teamData[] = "Average rating: **".round($ts->getAvgTeamRating()).'**';
         $teamData[] = $ts->getRatingChange() === 0.0 ?
             "NEW PLAYERS IN MATCH - NO POINTS HAS BEEN GIVEN" :
-            "Rating change: **". $ts->getNiceRatingChange() . "**";
+            "Rating change: **".$ts->getNiceRatingChange()."**";
         foreach ($ts->getPlayerSnapshots() as $playerSnapshot) {
-            $teamData[] = "`" . $playerSnapshot->getPlayer()->getName() .
-                "`: " . $playerSnapshot->getNiceRating(0) .
-                " -> " . $playerSnapshot->getPlayer()->getNiceRating(0);
+            $teamData[] = "`".$playerSnapshot->getPlayer()->getName().
+                "`: ".$playerSnapshot->getNiceRating(0).
+                " -> ".$playerSnapshot->getPlayer()->getNiceRating(0);
         }
         return implode("\n", $teamData);
     }
 
+    #[Route('/getFile/', name: 'getFile', methods: ['GET'])]
+    public function getFileForReplay(
+        Request $request,
+        CalculatedMatchRepository $calculatedMatchRepository
+    ): Response {
+        $calculatedMatch = $calculatedMatchRepository->find($request->get('id'));
+        // Provide a name for your file with extension
+        $folder = RegenerateCommand::$unparsedFilesDir;
+        $fileContent = file_get_contents($folder."/".$calculatedMatch->getFilename());
+        // The dynamically created content of the file
+        // Return a response with a specific content
+        $response = new Response($fileContent);
+
+        // Create the disposition of the file
+        $disposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $calculatedMatch->getFilename()
+        );
+
+        // Set the content disposition
+        $response->headers->set('Content-Disposition', $disposition);
+
+        // Dispatch request
+        return $response;
+    }
 }

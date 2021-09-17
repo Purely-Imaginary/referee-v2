@@ -219,4 +219,9 @@ class CalculatedMatch
         }
         return [$bestGoal, $minTime];
     }
+
+    public function getFilename(): string
+    {
+        return 'HBReplay-'.date('Y-m-d-H\hi\m',strtotime($this->getTime())).'.hbr2';
+    }
 }

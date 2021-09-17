@@ -58,7 +58,7 @@ class MatchCalculatorService
 
     public function getDataFromFile($filename)
     {
-        return json_decode(file_get_contents($this->PROCESSED_FILE_FOLDER . "/" . $filename), true);
+        return json_decode(file_get_contents($this->PROCESSED_FILE_FOLDER."/".$filename), true);
     }
 
     public function isInDB(string $position): bool
@@ -102,12 +102,8 @@ class MatchCalculatorService
         return $goal;
     }
 
-    protected function calculateRatingChange(CalculatedMatch $newCalculatedMatch, bool $checkForUnclassified = true): float
+    protected function calculateRatingChange(CalculatedMatch $newCalculatedMatch): float
     {
-        if ($checkForUnclassified && $this->checkForUnclassifiedPlayers($newCalculatedMatch)){
-            return 0;
-        }
-
         $ratingDifference = $newCalculatedMatch->getTeamSnapshot(false)->getAvgTeamRating() - $newCalculatedMatch->getTeamSnapshot(true)->getAvgTeamRating();
         $powerPiece = pow(10, ($ratingDifference / 400));
         $winChance = (1 / (1 + $powerPiece));
@@ -125,7 +121,7 @@ class MatchCalculatorService
 
         $ratingChange = ($scorePerformance - $winChance) * self::$kCoefficient;
 
-        $ratingChange = $ratingChange * (600 / max($newCalculatedMatch->getEndTime(),400));
+        $ratingChange = $ratingChange * (600 / max($newCalculatedMatch->getEndTime(), 400));
 
         return $ratingChange / count($newCalculatedMatch->getTeamSnapshot(true)->getPlayerSnapshots());
     }
@@ -139,12 +135,8 @@ class MatchCalculatorService
             $player->setGoalsScored($player->getGoalsScored() + $playerSnapshot->getTeamSnapshot()->getScore());
             $player->setGoalsLost($player->getGoalsLost() + $newCalculatedMatch->getTeamSnapshot(false)->getScore());
 
-            if ($player->getRating() !== null) {
-                $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
-            }
-            if ($player->getTotalMatches() >= Player::$unrankedMatchesAmount && $player->getRating() === null){
-                $this->classifyPlayer($player);
-            }
+
+            $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
         }
 
         foreach ($newCalculatedMatch->getTeamSnapshot(false)->getPlayerSnapshots() as $playerSnapshot) {
@@ -154,49 +146,8 @@ class MatchCalculatorService
             $player->setGoalsScored($player->getGoalsScored() + $playerSnapshot->getTeamSnapshot()->getScore());
             $player->setGoalsLost($player->getGoalsLost() + $newCalculatedMatch->getTeamSnapshot(true)->getScore());
 
-            if ($player->getRating() !== null) {
-                $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
-            }
-            if ($player->getTotalMatches() >= Player::$unrankedMatchesAmount && $player->getRating() === null){
-                $this->classifyPlayer($player);
-            }
+            $player->setRating($player->getRating() + $playerSnapshot->getTeamSnapshot()->getRatingChange());
         }
-    }
-
-    protected function checkForUnclassifiedPlayers(CalculatedMatch $calculatedMatch): bool
-    {
-        foreach ($calculatedMatch->getTeamSnapshots() as $teamSnapshot) {
-            foreach ($teamSnapshot->getPlayerSnapshots() as $playerSnapshot) {
-                if ($playerSnapshot->getPlayer()->getTotalMatches() < Player::$unrankedMatchesAmount)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    protected function classifyPlayer(Player $player): void
-    {
-        $matchesEstimatedRatings = [];
-        foreach ($player->getPlayerSnapshots() as $playerSnapshot) {
-            $matchesEstimatedRatings[] = $this->estimateRating($player, $playerSnapshot->getTeamSnapshot());
-        }
-        $rating = array_sum($matchesEstimatedRatings) / count($matchesEstimatedRatings);
-        $player->setRating($rating);
-    }
-
-    function estimateRating(Player $player, TeamSnapshot $teamSnapshot): float {
-        $ratingForTie = $teamSnapshot->getPlayerSnapshots()->count() * $teamSnapshot->getEnemyTeam()->getAvgTeamRating();
-        foreach ($teamSnapshot->getPlayerSnapshots() as $playerSnapshot) {
-            if ($playerSnapshot->getPlayer() !== $player) {
-                $ratingForTie -= $playerSnapshot->getRating() ?? Player::$startingRating;
-            }
-        }
-        $estimatedRatingChangeForRed = $this->calculateRatingChange($teamSnapshot->getCalculatedMatch(), false);
-        $estimatedRatingChangeForRed = $teamSnapshot->isRed() ? $estimatedRatingChangeForRed : -$estimatedRatingChangeForRed;
-
-        return $ratingForTie + ($estimatedRatingChangeForRed * 40);
     }
 
     public function generateDiscordEmbed(CalculatedMatch $cm): array
@@ -207,7 +158,7 @@ class MatchCalculatorService
             'content' => "New match has been uploaded!"
         ];
         $result['embeds'][] = [
-            "url" => "https://purely-imaginary.github.io/#/showMatch/" . $cm->getId(),
+            "url" => "https://purely-imaginary.github.io/#/showMatch/".$cm->getId(),
             "title" => "Match results!",
             "description" => $this->matchToDescription($cm)
         ];
@@ -224,21 +175,22 @@ class MatchCalculatorService
         return $result;
     }
 
-    private function matchToDescription(CalculatedMatch $cm): string {
-        $matchData[] = "**". ($cm->didRedWon() ? 'Red' : 'Blue') . " wins!**";
-        $matchData[] = '**' . $cm->getTeamSnapshot(true)->getScore() . ' : ' . $cm->getTeamSnapshot(false)->getScore() . '**';
-        $matchData[] = "\nMatch length: " . $cm->getNiceEndTime();
+    private function matchToDescription(CalculatedMatch $cm): string
+    {
+        $matchData[] = "**".($cm->didRedWon() ? 'Red' : 'Blue')." wins!**";
+        $matchData[] = '**'.$cm->getTeamSnapshot(true)->getScore().' : '.$cm->getTeamSnapshot(false)->getScore().'**';
+        $matchData[] = "\nMatch length: ".$cm->getNiceEndTime();
 
         $fastestGoal = $cm->getFastestGoal();
         if ($fastestGoal[1] < 5) {
             /** @var $fastestGoal <Goal, int> */
             $matchData[] =
-                'Blitzkrieg Order goes to **' .
-                $fastestGoal[0]->getPlayer()->getName() .
-                "** for fastest goal: **" .
-                $fastestGoal[1] .
-                '** seconds from whistle at ' .
-                $cm->getNiceTime($fastestGoal[0]->getTime()) .
+                'Blitzkrieg Order goes to **'.
+                $fastestGoal[0]->getPlayer()->getName().
+                "** for fastest goal: **".
+                $fastestGoal[1].
+                '** seconds from whistle at '.
+                $cm->getNiceTime($fastestGoal[0]->getTime()).
                 "!";
         }
         //TODO: Player's rating table with justify
@@ -248,15 +200,15 @@ class MatchCalculatorService
 
     private function teamToDescription(TeamSnapshot $ts): string
     {
-        $teamData = ['**' . ($ts->isRed() ? 'RED' : 'BLUE') . " TEAM:**\n"];
-        $teamData[] = "Average rating: **" . round($ts->getAvgTeamRating()) . '**';
+        $teamData = ['**'.($ts->isRed() ? 'RED' : 'BLUE')." TEAM:**\n"];
+        $teamData[] = "Average rating: **".round($ts->getAvgTeamRating()).'**';
         $teamData[] = $ts->getRatingChange() === 0.0 ?
             "NEW PLAYERS IN MATCH - NO POINTS HAS BEEN GIVEN" :
-            "Rating change: **". $ts->getNiceRatingChange() . "**";
+            "Rating change: **".$ts->getNiceRatingChange()."**";
         foreach ($ts->getPlayerSnapshots() as $playerSnapshot) {
-            $teamData[] = "`" . $playerSnapshot->getPlayer()->getName() .
-                "`: " . $playerSnapshot->getNiceRating(0) .
-                " -> " . $playerSnapshot->getPlayer()->getNiceRating(0);
+            $teamData[] = "`".$playerSnapshot->getPlayer()->getName().
+                "`: ".$playerSnapshot->getNiceRating(0).
+                " -> ".$playerSnapshot->getPlayer()->getNiceRating(0);
         }
         return implode("\n", $teamData);
     }

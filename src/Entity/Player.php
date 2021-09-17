@@ -60,7 +60,7 @@ class Player
      * @Groups({"ratingChart", "playersTable", "playerDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
-    private ?float $rating = null;
+    private ?float $rating = 1000;
 
     /**
      * @var PlayerSnapshot[]

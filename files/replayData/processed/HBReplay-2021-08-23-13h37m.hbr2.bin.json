@@ -1,0 +1,62 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 40.45,
+            "goalSide": "Red",
+            "goalSpeed": 3.043,
+            "goalTime": 42.267,
+            "goalTravelTime": 1.817
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 71.9,
+            "goalSide": "Blue",
+            "goalSpeed": 3.5,
+            "goalTime": 73.033,
+            "goalTravelTime": 1.133
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 367.5,
+            "goalSide": "Blue",
+            "goalSpeed": 1.148,
+            "goalTime": 370.2,
+            "goalTravelTime": 2.7
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 483.733,
+            "goalSide": "Blue",
+            "goalSpeed": 4.326,
+            "goalTime": 483.933,
+            "goalTravelTime": 0.2
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 572.8,
+            "goalSide": "Blue",
+            "goalSpeed": 4.613,
+            "goalTime": 573.05,
+            "goalTravelTime": 0.25
+        }
+    ],
+    "rawPositionsAtEnd": "-14.749322473233258--60.6494829195347|-345.48689304559264--56.36649792543898|-270.66058069505783--38.774327860452225|",
+    "score": {
+        "Blue": 4,
+        "Red": 1
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "MaddoHatto",
+            "ToPP"
+        ],
+        "Red": [
+            "hubigz",
+            "Nelson Mandela"
+        ]
+    },
+    "time": "2021-08-23 13:37"
+}

@@ -1,0 +1,118 @@
+{
+    "gameTime": 352.017,
+    "goalsData": [
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 10.933,
+            "goalSide": "Red",
+            "goalSpeed": 4.604,
+            "goalTime": 11.55,
+            "goalTravelTime": 0.617
+        },
+        {
+            "goalScorerName": "logical-luke",
+            "goalShotTime": 33.867,
+            "goalSide": "Red",
+            "goalSpeed": 0.368,
+            "goalTime": 38.033,
+            "goalTravelTime": 4.166
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 78.0,
+            "goalSide": "Blue",
+            "goalSpeed": 6.115,
+            "goalTime": 78.15,
+            "goalTravelTime": 0.15
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 90.3,
+            "goalSide": "Blue",
+            "goalSpeed": 5.66,
+            "goalTime": 90.617,
+            "goalTravelTime": 0.317
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 104.3,
+            "goalSide": "Blue",
+            "goalSpeed": 1.243,
+            "goalTime": 107.067,
+            "goalTravelTime": 2.767
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 168.75,
+            "goalSide": "Blue",
+            "goalSpeed": 7.089,
+            "goalTime": 169.217,
+            "goalTravelTime": 0.467
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 193.217,
+            "goalSide": "Blue",
+            "goalSpeed": 5.471,
+            "goalTime": 193.583,
+            "goalTravelTime": 0.366
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 241.683,
+            "goalSide": "Blue",
+            "goalSpeed": 1.42,
+            "goalTime": 244.367,
+            "goalTravelTime": 2.684
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 252.8,
+            "goalSide": "Blue",
+            "goalSpeed": 3.657,
+            "goalTime": 253.55,
+            "goalTravelTime": 0.75
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 263.383,
+            "goalSide": "Blue",
+            "goalSpeed": 4.991,
+            "goalTime": 263.5,
+            "goalTravelTime": 0.117
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 294.6,
+            "goalSide": "Blue",
+            "goalSpeed": 4.489,
+            "goalTime": 295.017,
+            "goalTravelTime": 0.417
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 351.817,
+            "goalSide": "Blue",
+            "goalSpeed": 3.148,
+            "goalTime": 352.017,
+            "goalTravelTime": 0.2
+        }
+    ],
+    "rawPositionsAtEnd": "-405.0-39.580610204143696|-207.88904624144516--64.1808850885959|-403.1779339054393--25.197740249127406|-172.00203323771518--100.687188169824|",
+    "score": {
+        "Blue": 10,
+        "Red": 2
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "Nelson Mandela",
+            "Amman"
+        ],
+        "Red": [
+            "logical-luke",
+            "ToPP"
+        ]
+    },
+    "time": "2021-08-24 10:20"
+}

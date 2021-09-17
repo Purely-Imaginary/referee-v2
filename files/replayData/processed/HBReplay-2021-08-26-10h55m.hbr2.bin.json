@@ -1,0 +1,64 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 86.967,
+            "goalSide": "Red",
+            "goalSpeed": 3.548,
+            "goalTime": 89.217,
+            "goalTravelTime": 2.25
+        },
+        {
+            "goalScorerName": "ToPP",
+            "goalShotTime": 378.983,
+            "goalSide": "Blue",
+            "goalSpeed": 1.713,
+            "goalTime": 379.917,
+            "goalTravelTime": 0.934
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 397.95,
+            "goalSide": "Red",
+            "goalSpeed": 3.597,
+            "goalTime": 398.917,
+            "goalTravelTime": 0.967
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 516.133,
+            "goalSide": "Red",
+            "goalSpeed": 2.322,
+            "goalTime": 517.883,
+            "goalTravelTime": 1.75
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 592.467,
+            "goalSide": "Red",
+            "goalSpeed": 1.963,
+            "goalTime": 594.55,
+            "goalTravelTime": 2.083
+        }
+    ],
+    "rawPositionsAtEnd": "-160.07379954851044--4.068500349546995|-360.4272823141534-255.0|32.52163758363286-216.39140113110983|-14.80613540656499-164.80613717766386|120.88538702631028-100.09674629696921|192.9504255751539-134.54951279378344|",
+    "score": {
+        "Blue": 1,
+        "Red": 4
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "hubigz",
+            "ToPP",
+            "Amman"
+        ],
+        "Red": [
+            "MaddoHatto",
+            "adamaru",
+            "Nelson Mandela"
+        ]
+    },
+    "time": "2021-08-26 10:55"
+}

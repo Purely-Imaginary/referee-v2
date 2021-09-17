@@ -1,0 +1,64 @@
+{
+    "gameTime": 785.1,
+    "goalsData": [
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 30.7,
+            "goalSide": "Blue",
+            "goalSpeed": 1.18,
+            "goalTime": 33.45,
+            "goalTravelTime": 2.75
+        },
+        {
+            "goalScorerName": "hubigz",
+            "goalShotTime": 134.217,
+            "goalSide": "Blue",
+            "goalSpeed": 4.996,
+            "goalTime": 134.583,
+            "goalTravelTime": 0.366
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 213.45,
+            "goalSide": "Red",
+            "goalSpeed": 2.783,
+            "goalTime": 214.633,
+            "goalTravelTime": 1.183
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 217.267,
+            "goalSide": "Red",
+            "goalSpeed": 2.075,
+            "goalTime": 219.083,
+            "goalTravelTime": 1.816
+        },
+        {
+            "goalScorerName": "logical-luke",
+            "goalShotTime": 784.433,
+            "goalSide": "Red",
+            "goalSpeed": 3.301,
+            "goalTime": 785.1,
+            "goalTravelTime": 0.667
+        }
+    ],
+    "rawPositionsAtEnd": "265.95246164904347-177.25786364993408|453.21976317670175-48.536698904002485|228.81415026637183-68.35371668927088|256.641197926503-86.80393151435372|195.5876799829892-178.80272672029236|513.2691168965827-77.3112407373284|",
+    "score": {
+        "Blue": 2,
+        "Red": 3
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "hubigz",
+            "ToPP",
+            "Amman"
+        ],
+        "Red": [
+            "MaddoHatto",
+            "logical-luke",
+            "Nelson Mandela"
+        ]
+    },
+    "time": "2021-08-20 15:28"
+}

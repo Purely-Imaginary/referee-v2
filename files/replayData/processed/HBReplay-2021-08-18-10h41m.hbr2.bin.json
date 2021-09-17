@@ -1,0 +1,86 @@
+{
+    "gameTime": 600.017,
+    "goalsData": [
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 8.517,
+            "goalSide": "Blue",
+            "goalSpeed": 3.392,
+            "goalTime": 9.6,
+            "goalTravelTime": 1.083
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 92.383,
+            "goalSide": "Blue",
+            "goalSpeed": 0.719,
+            "goalTime": 93.333,
+            "goalTravelTime": 0.95
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 208.133,
+            "goalSide": "Blue",
+            "goalSpeed": 4.76,
+            "goalTime": 208.367,
+            "goalTravelTime": 0.234
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 262.0,
+            "goalSide": "Blue",
+            "goalSpeed": 1.703,
+            "goalTime": 263.483,
+            "goalTravelTime": 1.483
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 387.267,
+            "goalSide": "Blue",
+            "goalSpeed": 2.225,
+            "goalTime": 388.267,
+            "goalTravelTime": 1.0
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 417.15,
+            "goalSide": "Blue",
+            "goalSpeed": 3.079,
+            "goalTime": 418.333,
+            "goalTravelTime": 1.183
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 496.983,
+            "goalSide": "Blue",
+            "goalSpeed": 4.14,
+            "goalTime": 497.767,
+            "goalTravelTime": 0.784
+        },
+        {
+            "goalScorerName": "adamaru",
+            "goalShotTime": 502.05,
+            "goalSide": "Blue",
+            "goalSpeed": 1.879,
+            "goalTime": 502.8,
+            "goalTravelTime": 0.75
+        }
+    ],
+    "rawPositionsAtEnd": "188.75016083481208-105.85477589808988|298.04210400760013-29.09321648226792|191.38772606716572--58.2096837311467|205.19154710843782-78.05235601724618|",
+    "score": {
+        "Blue": 8,
+        "Red": 0
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "MaddoHatto",
+            "adamaru"
+        ],
+        "Red": [
+            "Amman",
+            "ToPP"
+        ]
+    },
+    "time": "2021-08-18 10:41"
+}

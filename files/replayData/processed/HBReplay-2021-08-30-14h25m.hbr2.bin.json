@@ -1,0 +1,142 @@
+{
+    "gameTime": 614.1,
+    "goalsData": [
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 69.167,
+            "goalSide": "Red",
+            "goalSpeed": 2.945,
+            "goalTime": 71.05,
+            "goalTravelTime": 1.883
+        },
+        {
+            "goalScorerName": "logical-luke",
+            "goalShotTime": 135.917,
+            "goalSide": "Blue",
+            "goalSpeed": 4.775,
+            "goalTime": 136.25,
+            "goalTravelTime": 0.333
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 195.017,
+            "goalSide": "Red",
+            "goalSpeed": 4.621,
+            "goalTime": 195.533,
+            "goalTravelTime": 0.516
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 203.583,
+            "goalSide": "Blue",
+            "goalSpeed": 2.318,
+            "goalTime": 204.4,
+            "goalTravelTime": 0.817
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 206.167,
+            "goalSide": "Red",
+            "goalSpeed": 1.842,
+            "goalTime": 207.467,
+            "goalTravelTime": 1.3
+        },
+        {
+            "goalScorerName": "logical-luke",
+            "goalShotTime": 213.933,
+            "goalSide": "Blue",
+            "goalSpeed": 5.935,
+            "goalTime": 214.5,
+            "goalTravelTime": 0.567
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 295.833,
+            "goalSide": "Red",
+            "goalSpeed": 4.112,
+            "goalTime": 296.283,
+            "goalTravelTime": 0.45
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 309.933,
+            "goalSide": "Red",
+            "goalSpeed": 2.833,
+            "goalTime": 310.583,
+            "goalTravelTime": 0.65
+        },
+        {
+            "goalScorerName": "logical-luke",
+            "goalShotTime": 334.067,
+            "goalSide": "Blue",
+            "goalSpeed": 2.981,
+            "goalTime": 335.15,
+            "goalTravelTime": 1.083
+        },
+        {
+            "goalScorerName": "Amman",
+            "goalShotTime": 363.1,
+            "goalSide": "Red",
+            "goalSpeed": 1.368,
+            "goalTime": 365.667,
+            "goalTravelTime": 2.567
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 497.117,
+            "goalSide": "Blue",
+            "goalSpeed": 3.259,
+            "goalTime": 498.317,
+            "goalTravelTime": 1.2
+        },
+        {
+            "goalScorerName": "Nelson Mandela",
+            "goalShotTime": 543.55,
+            "goalSide": "Red",
+            "goalSpeed": 3.621,
+            "goalTime": 544.233,
+            "goalTravelTime": 0.683
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 554.8,
+            "goalSide": "Blue",
+            "goalSpeed": 2.911,
+            "goalTime": 555.483,
+            "goalTravelTime": 0.683
+        },
+        {
+            "goalScorerName": "MaddoHatto",
+            "goalShotTime": 585.083,
+            "goalSide": "Blue",
+            "goalSpeed": 3.623,
+            "goalTime": 585.933,
+            "goalTravelTime": 0.85
+        },
+        {
+            "goalScorerName": "logical-luke",
+            "goalShotTime": 613.567,
+            "goalSide": "Blue",
+            "goalSpeed": 3.304,
+            "goalTime": 614.1,
+            "goalTravelTime": 0.533
+        }
+    ],
+    "rawPositionsAtEnd": "-218.8000457341746-39.04705415654906|-294.8716383332559--27.13925212829946|-344.4986465047232-72.82122729614373|-192.30048353503608--7.571347497135721|",
+    "score": {
+        "Blue": 8,
+        "Red": 7
+    },
+    "startingGameTime": 0,
+    "teams": {
+        "Blue": [
+            "MaddoHatto",
+            "logical-luke"
+        ],
+        "Red": [
+            "Nelson Mandela",
+            "Amman"
+        ]
+    },
+    "time": "2021-08-30 14:25"
+}

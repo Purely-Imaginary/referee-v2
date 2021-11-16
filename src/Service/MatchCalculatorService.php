@@ -27,7 +27,7 @@ class MatchCalculatorService
 
     public function process(array $data): ?CalculatedMatch
     {
-        if (!isset($data['rawPositionsAtEnd']) || $this->isInDB($data['rawPositionsAtEnd'])) {
+        if (!isset($data['rawPositionsAtEnd']) || $data['rawPositionsAtEnd'] === null || $this->isInDB($data['rawPositionsAtEnd'])) {
             return null;
         }
 

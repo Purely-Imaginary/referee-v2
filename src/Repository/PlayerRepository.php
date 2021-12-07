@@ -30,4 +30,15 @@ class PlayerRepository extends ServiceEntityRepository
             ->orderBy('p.rating', 'DESC')
             ->getQuery()->getResult();
     }
+
+    /**
+     * @return Player[]
+     */
+    public function getPlayersDataForTeams(array $playerNames): array
+    {
+        $qb = $this->createQueryBuilder('p');
+        return $qb->where($qb->expr()->in('p.name', $playerNames))
+            ->orderBy('p.rating', 'DESC')
+            ->getQuery()->getResult();
+    }
 }

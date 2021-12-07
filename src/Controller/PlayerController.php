@@ -25,7 +25,7 @@ class PlayerController extends AbstractController
     public function index(): Response
     {
         $playersData = $this->playerRepository->getPlayersTableData();
-        $monthAgo = strtotime(date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . "-91 month")));
+        $monthAgo = strtotime(date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-91 month")));
         $playersData = array_filter($playersData, fn ($v) => $v->getLastPlayed() > $monthAgo);
 
         return $this->json(array_values($playersData), 200, [], ['groups' => 'playersTable']);
@@ -70,12 +70,40 @@ class PlayerController extends AbstractController
             }
         }
 
-
         return $this->json([
             "red" => $finalRedTeam,
             "blue" => $finalBlueTeam,
             "redRating" => $finalResult[1],
             "blueRating" => $finalResult[2]
+        ]);
+    }
+
+    #[Route('/findTeamsByBaskets', name: 'findTeamsByBaskets', methods: ['GET'])]
+    public function getTeamsByBasketsFromPlayerList(
+        Request $request,
+        PlayerRepository $playerRepository
+    ): JsonResponse {
+        $playerNames = $request->get('players');
+
+        $playersArray = $playerRepository->getPlayersDataForTeams($playerNames);
+        $finalRedTeam = $finalBlueTeam = [];
+
+        for ($i = 0; $i < count($playersArray); $i++) {
+            if (!isset($playersArray[$i]) || !isset($playersArray[$i + 1])) {
+                break;
+            }
+            $higherToFirst = (bool)random_int(0, 1);
+            $finalRedTeam[] = $playersArray[$i + (int)$higherToFirst];
+            $finalBlueTeam[] = $playersArray[$i + (int)(!$higherToFirst)];
+            $i++;
+        }
+
+
+        return $this->json([
+            "red" => array_map(fn($x) => $x->getName(),$finalRedTeam),
+            "blue" => array_map(fn($x) => $x->getName(),$finalBlueTeam),
+            "redRating" => $this->getAverageRatingForTeam($finalRedTeam),
+            "blueRating" => $this->getAverageRatingForTeam($finalBlueTeam)
         ]);
     }
 
@@ -124,5 +152,12 @@ class PlayerController extends AbstractController
         return [$finalPermutation, $finalRedTeamRating, $finalBlueTeamRating];
     }
 
-
+    function getAverageRatingForTeam(array $team)
+    {
+        $acc = 0;
+        foreach ($team as $player) {
+            $acc += $player->getRating();
+        }
+        return round($acc / count($team), 2);
+    }
 }

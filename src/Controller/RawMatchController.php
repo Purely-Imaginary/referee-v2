@@ -7,6 +7,8 @@ use App\Entity\CalculatedMatch;
 use App\Entity\Goal;
 use App\Entity\TeamSnapshot;
 use App\Repository\CalculatedMatchRepository;
+use App\Service\MatchCalculatorService;
+use App\Service\MatchParserService;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -31,21 +33,19 @@ class RawMatchController extends AbstractController
     public function index(
         Request $request,
         KernelInterface $kernel,
-        CalculatedMatchRepository $calculatedMatchRepository
+        CalculatedMatchRepository $calculatedMatchRepository,
+        MatchCalculatorService $matchCalculatorService,
+        MatchParserService $matchParserService
     ): Response {
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get("file");
-        file_put_contents(RegenerateCommand::$unparsedFilesDir.'/'.filter_var($uploadedFile->getClientOriginalName(), FILTER_SANITIZE_STRING), $uploadedFile->getContent());
+        $clientOriginalName = $uploadedFile->getClientOriginalName();
+        file_put_contents(RegenerateCommand::$unparsedFilesDir.'/'.filter_var($clientOriginalName, FILTER_SANITIZE_STRING), $uploadedFile->getContent());
 
-        $application = new Application($kernel);
-        $application->setAutoExit(false);
+        $out = "";
+        exec("node /var/www/parser/haxball/replay.js convert /var/www/files/replayData/unparsed/$clientOriginalName /var/www/files/replayData/preprocessed/$clientOriginalName.bin.json", $out);
 
-        $input = new ArrayInput([
-            'command' => 'referee:regenerate',
-            'parseHbrs' => 'true',
-        ]);
-        // You can use NullOutput() if you don't need the output
-        $application->run($input, (new NullOutput()));
+        $matchParserService->parseMatch($matchParserService->getDataFromFile($clientOriginalName. ".bin.json"));
 
         (new Client())->post(
             $this->DISCORD_WEBHOOK_URL,

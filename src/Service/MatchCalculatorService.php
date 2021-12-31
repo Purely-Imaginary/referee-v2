@@ -58,7 +58,16 @@ class MatchCalculatorService
 
     public function getDataFromFile($filename)
     {
-        return json_decode(file_get_contents($this->PROCESSED_FILE_FOLDER."/".$filename), true);
+        $contents = file_get_contents($this->PROCESSED_FILE_FOLDER."/".$filename);
+        try {
+            $decode = json_decode($contents, true, 512, JSON_THROW_ON_ERROR && JSON_OBJECT_AS_ARRAY);
+        } catch (\JsonException $e) {
+            $i = 0;
+        }
+        if (json_last_error() != JSON_ERROR_NONE) {
+            die(json_last_error_msg());
+        }
+        return $decode;
     }
 
     public function isInDB(string $position): bool

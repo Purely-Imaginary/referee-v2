@@ -31,11 +31,18 @@ function convert(replay) {
   const controller = new exposed.$_ReplayController(replay, new exposed.$_GameState, exposed.v);
   const writer = new Writer()
   const names = new Object();
+  const tick = [];
+  const temp = [];
   controller.onTick = () => {
+    // return;
+
     for (const player of controller._L._D.filter(x => x._$._P !== 0)) {
       names[player._T] = player._o;
     }
-    writer.writePython(controller);
+    let single = writer.writeJSON(controller)
+    if (single.s !== 0) {
+      tick.push(single);
+    }
   };
 
   controller.onTick();
@@ -46,10 +53,10 @@ function convert(replay) {
   
   writer.compact();
   const writer2 = new Writer();
-  writer2.writeBuffer(Buffer.from(JSON.stringify(names) + '\r\n\r\n', 'utf8'));
-  writer2.writeBuffer(writer.view.buffer);
+  let payload = {names: names, match: tick}
+  writer2.writeBuffer(JSON.stringify(payload), 'utf8');
   writer2.compact();
-  return writer2.view.buffer;
+  return JSON.stringify(payload);
 }
 
 if (require.main === module) {
@@ -58,7 +65,7 @@ if (require.main === module) {
       const fileFrom = process.argv[3];
       const fileTo = process.argv[4];
       console.log(`${fileFrom} -> ${fileTo}`);
-      fs.writeFileSync(fileTo, Buffer.from(convert(new Uint8Array(require('fs').readFileSync(fileFrom)))));
+      fs.writeFileSync(fileTo, (convert(new Uint8Array(require('fs').readFileSync(fileFrom)))));
       break;
     }
     case 'help':

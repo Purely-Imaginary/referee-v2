@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.1-fpm
 
 ARG VERSION=5.1.20
 ENV EXT_APCU_VERSION=${VERSION}
@@ -79,7 +79,7 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash
 #   mv ~/.symfony/bin/symfony /usr/local/bin/symfony
 
 # Xdebug (disabled by default, but installed if required)
- RUN pecl install xdebug-3.0.3 && docker-php-ext-enable xdebug
+ RUN pecl install xdebug-3.1.2 && docker-php-ext-enable xdebug
  ADD xdebug.ini /usr/local/etc/php/conf.d/
 
 WORKDIR /var/www

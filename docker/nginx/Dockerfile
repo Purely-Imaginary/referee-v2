@@ -2,4 +2,4 @@ FROM nginx:alpine
 WORKDIR /var/www
 RUN nginx -t;
 CMD nginx
-EXPOSE 80 443
+EXPOSE 800 443

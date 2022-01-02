@@ -23,7 +23,7 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./logs/nginx:/var/log/nginx
     ports:
-      - "80:80"
+      - "800:800"
       - "443:443"
 
   db:

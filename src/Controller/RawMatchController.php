@@ -7,6 +7,11 @@ use App\Entity\CalculatedMatch;
 use App\Entity\Goal;
 use App\Entity\TeamSnapshot;
 use App\Repository\CalculatedMatchRepository;
+use App\Service\MatchCalculatorService;
+use App\Service\MatchParserService;
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
+use JsonException;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -27,32 +32,46 @@ class RawMatchController extends AbstractController
     ) {
     }
 
+    /**
+     * @throws GuzzleException
+     * @throws JsonException
+     * @throws Exception
+     */
     #[Route('/raw/match', name: 'raw_match')]
     public function index(
         Request $request,
         KernelInterface $kernel,
-        CalculatedMatchRepository $calculatedMatchRepository
+        CalculatedMatchRepository $calculatedMatchRepository,
+        MatchCalculatorService $matchCalculatorService,
+        MatchParserService $matchParserService
     ): Response {
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get("file");
-        file_put_contents(RegenerateCommand::$unparsedFilesDir.'/'.filter_var($uploadedFile->getClientOriginalName(), FILTER_SANITIZE_STRING), $uploadedFile->getContent());
+        $clientOriginalName = $uploadedFile->getClientOriginalName();
+        file_put_contents(RegenerateCommand::$unparsedFilesDir.'/'.filter_var($clientOriginalName, FILTER_SANITIZE_STRING), $uploadedFile->getContent());
 
-        $application = new Application($kernel);
-        $application->setAutoExit(false);
+        $out = "";
+        exec("node /var/www/parser/haxball/replay.js convert /var/www/files/replayData/unparsed/$clientOriginalName /var/www/files/replayData/preprocessed/$clientOriginalName.bin.json", $out);
 
-        $input = new ArrayInput([
-            'command' => 'referee:regenerate',
-            'parseHbrs' => 'true',
-        ]);
-        // You can use NullOutput() if you don't need the output
-        $application->run($input, (new NullOutput()));
+        $calculatedMatch = $matchCalculatorService->process(
+            $matchParserService->parseMatch(
+                $matchParserService->getDataFromFile($clientOriginalName. ".bin.json"),
+                $clientOriginalName
+            )
+        );
+
+        exec("rm /var/www/files/replayData/preprocessed/$clientOriginalName.bin.json", $out);
+
+        if ($calculatedMatch === null){
+            throw new Exception('Duplicate or no end positions found');
+        }
 
         (new Client())->post(
             $this->DISCORD_WEBHOOK_URL,
-            ['json' => $this->generateDiscordEmbed($calculatedMatchRepository->find($calculatedMatchRepository->getLastMatchId()))]
+            ['json' => $this->generateDiscordEmbed($calculatedMatch)]
         );
 
-        return $this->json($calculatedMatchRepository->getLastMatchId());
+        return $this->json($calculatedMatch->getId());
     }
 
     private function generateDiscordEmbed(CalculatedMatch $cm): array

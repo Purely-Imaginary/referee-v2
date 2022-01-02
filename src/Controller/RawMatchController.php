@@ -9,6 +9,9 @@ use App\Entity\TeamSnapshot;
 use App\Repository\CalculatedMatchRepository;
 use App\Service\MatchCalculatorService;
 use App\Service\MatchParserService;
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
+use JsonException;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -29,6 +32,11 @@ class RawMatchController extends AbstractController
     ) {
     }
 
+    /**
+     * @throws GuzzleException
+     * @throws JsonException
+     * @throws Exception
+     */
     #[Route('/raw/match', name: 'raw_match')]
     public function index(
         Request $request,
@@ -45,14 +53,25 @@ class RawMatchController extends AbstractController
         $out = "";
         exec("node /var/www/parser/haxball/replay.js convert /var/www/files/replayData/unparsed/$clientOriginalName /var/www/files/replayData/preprocessed/$clientOriginalName.bin.json", $out);
 
-        $matchParserService->parseMatch($matchParserService->getDataFromFile($clientOriginalName. ".bin.json"));
+        $calculatedMatch = $matchCalculatorService->process(
+            $matchParserService->parseMatch(
+                $matchParserService->getDataFromFile($clientOriginalName. ".bin.json"),
+                $clientOriginalName
+            )
+        );
+
+        exec("rm /var/www/files/replayData/preprocessed/$clientOriginalName.bin.json", $out);
+
+        if ($calculatedMatch === null){
+            throw new Exception('Duplicate or no end positions found');
+        }
 
         (new Client())->post(
             $this->DISCORD_WEBHOOK_URL,
-            ['json' => $this->generateDiscordEmbed($calculatedMatchRepository->find($calculatedMatchRepository->getLastMatchId()))]
+            ['json' => $this->generateDiscordEmbed($calculatedMatch)]
         );
 
-        return $this->json($calculatedMatchRepository->getLastMatchId());
+        return $this->json($calculatedMatch->getId());
     }
 
     private function generateDiscordEmbed(CalculatedMatch $cm): array

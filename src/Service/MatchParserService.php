@@ -8,6 +8,8 @@ use App\Repository\CalculatedMatchRepository;
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Traits\NiceRatingTrait;
+use Exception;
+use JetBrains\PhpStorm\ArrayShape;
 
 class MatchParserService
 {
@@ -31,6 +33,7 @@ class MatchParserService
         ini_set('memory_limit', '1024M');
         $contents = file_get_contents($this->PROCESSED_FILE_FOLDER."/".$filename);
         $decode = json_decode($contents, true, 512, JSON_THROW_ON_ERROR && JSON_OBJECT_AS_ARRAY);
+
         return $decode;
     }
 
@@ -51,10 +54,11 @@ class MatchParserService
      * b- ball disc
      *
      * @param mixed $matchData
+     * @throws Exception
      */
-    public function parseMatch(mixed $matchData)
+    public function parseMatch(mixed $matchData, string $filename)
     {
-        $players = [];
+        $players = ['red' => [], 'blue' => []];
         $touches = [];
         $kicks = [];
         $goals = [];
@@ -62,8 +66,10 @@ class MatchParserService
             'red' => 0,
             'blue' => 0
         ];
+
         $gameStartTime = 0;
         $matchLengthInTicks = 0;
+        $rawPositionsAtEnd = "";
 
         $match = $matchData['match'];
 
@@ -81,7 +87,8 @@ class MatchParserService
             // calculate players presence in match to determine who participated
             if ($tick['s'] > MatchStateEnum::WARMUP->value) {
                 foreach ($tick['p'] as $player) {
-                    $players[$player['id']] = isset($players[$player['id']]) ? $players[$player['id']]++ : 1;
+                    $team = mb_strtolower(GoalSideEnum::from($player['t'])->name);
+                    $players[$team][$matchData['names'][$player['id']]] = isset($players[$team][$matchData['names'][$player['id']]]) ? ++$players[$team][$matchData['names'][$player['id']]] : 1;
                 }
                 $matchLengthInTicks++;
             }
@@ -119,6 +126,7 @@ class MatchParserService
                 $tick['rS'] === $score['red'] ? $score['blue']++ : $score['red']++;
 
                 // goal scorer and assist detection
+                $shotPlace = [];
                 $scorerName = $assistName = $shotTime = $assistTime = $assistLength = $assistPlace = -1;
                 for ($rev = count($touches) - 1; $rev >= 0; $rev--) {
                     if ($scorerName === -1 && $touches[$rev]['team'] === $goalSide) {
@@ -154,8 +162,16 @@ class MatchParserService
                 ];
             }
         }
-        xdebug_break();
-        $i = 0;
+
+        return [
+            'goalsData' => $goals,
+            'gameTime' => $match[count($match) - 1]['gT'],
+            'rawPositionsAtEnd' => $this->getPositionsFromTick($match),
+            'score' => $score,
+            'teams' => $this->generateTeams($players, $matchLengthInTicks),
+            'startingGameTime' => $gameStartTime,
+            'time' => $this->getTimeFromFilename($filename)
+        ];
     }
 
     public function calculateDistance($ball, $player): float
@@ -164,6 +180,7 @@ class MatchParserService
         $by = $ball['a']['y'];
         $px = $player['a']['x'];
         $py = $player['a']['y'];
+
         return sqrt(($bx - $px) ** 2 + ($by - $py) ** 2);
     }
 
@@ -174,5 +191,61 @@ class MatchParserService
         $change = abs($vector1 - $vector2);
 
         return $change > 0.5;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getPositionsFromTick($ticks):string
+    {
+        $tick = $this->getLastMeaningfulTick($ticks);
+        $returnString = "";
+        foreach ($tick['p'] as $player) {
+            $returnString .= $player['d']['a']['x'] . ',' . $player['d']['a']['y'] . "|";
+        }
+
+        return $returnString;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getTimeFromFilename(string $filename): string
+    {
+        $matches = [];
+        preg_match("/HBReplay-([0-9]{4})-([0-9]{2})-([0-9]{2})-([0-9]{2})h([0-9]{2})m.hbr2/", $filename, $matches);
+        // "2021-11-05 12:42"
+        if (count($matches) !== 6){
+            throw new Exception("Invalid filename");
+        }
+
+        return $matches[1] . "-" . $matches[2] . "-" . $matches[3] . " " . $matches[4] . ":" . $matches[5];
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getLastMeaningfulTick($ticks): array
+    {
+        for ($i = count($ticks) - 1; $i > 0; $i--){
+            if ($ticks[$i]['s'] === MatchStateEnum::GAME->value){
+                return $ticks[$i];
+            }
+        }
+        throw new Exception("No gametime found");
+    }
+
+    #[ArrayShape(['red' => "array", 'blue' => "array"])]
+    public function generateTeams($playersData,  $gameTimeInTicks, $threshold = 0.6): array
+    {
+        $returnData = ['red' => [], 'blue' => []];
+        foreach ($playersData as $team => $teamData) {
+            foreach ($teamData as $playerName => $ticksInPlay) {
+                if ($ticksInPlay > $gameTimeInTicks * $threshold) {
+                    $returnData[$team][] = $playerName;
+                }
+            }
+        }
+        return $returnData;
     }
 }

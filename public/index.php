@@ -15,6 +15,7 @@ if ($_SERVER['APP_DEBUG']) {
     Debug::enable();
 }
 ini_set('max_execution_time', 0);
+error_reporting(error_reporting() & ~E_DEPRECATED);
 $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);

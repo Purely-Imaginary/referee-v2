@@ -40,8 +40,6 @@ class RawMatchController extends AbstractController
     #[Route('/raw/match', name: 'raw_match')]
     public function index(
         Request $request,
-        KernelInterface $kernel,
-        CalculatedMatchRepository $calculatedMatchRepository,
         MatchCalculatorService $matchCalculatorService,
         MatchParserService $matchParserService
     ): Response {

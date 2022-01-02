@@ -130,7 +130,7 @@ class MatchCalculatorService
 
         $ratingChange = ($scorePerformance - $winChance) * self::$kCoefficient;
 
-        $ratingChange = $ratingChange * (600 / max($newCalculatedMatch->getEndTime(), 400));
+        $ratingChange = $ratingChange * (180 / max($newCalculatedMatch->getEndTime(), 90));
 
         return $ratingChange / count($newCalculatedMatch->getTeamSnapshot(true)->getPlayerSnapshots());
     }

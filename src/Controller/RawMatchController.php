@@ -47,7 +47,7 @@ class RawMatchController extends AbstractController
     ): Response {
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get("file");
-        $clientOriginalName = $uploadedFile->getClientOriginalName();
+        $clientOriginalName = htmlentities($uploadedFile->getClientOriginalName());
         file_put_contents(RegenerateCommand::$unparsedFilesDir.'/'.filter_var($clientOriginalName, FILTER_SANITIZE_STRING), $uploadedFile->getContent());
 
         $out = "";

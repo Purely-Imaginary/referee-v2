@@ -36,8 +36,8 @@ class MatchCalculatorService
                 ->setRawPositions($data['rawPositionsAtEnd'])
                 ->setStartTime($data['startingGameTime'])
                 ->setEndTime($data['gameTime'])
-                ->addTeamSnapshot($this->processTeam($data, 'Red'))
-                ->addTeamSnapshot($this->processTeam($data, 'Blue'))
+                ->addTeamSnapshot($this->processTeam($data, 'red'))
+                ->addTeamSnapshot($this->processTeam($data, 'blue'))
                 ->setTime($data['time']);
 
         foreach ($data['goalsData'] as $rawGoal) {

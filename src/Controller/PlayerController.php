@@ -84,6 +84,7 @@ class PlayerController extends AbstractController
         PlayerRepository $playerRepository
     ): JsonResponse {
         $playerNames = $request->get('players');
+        array_map(fn ($x) => preg_replace("/[^A-Za-z0-9 ]/", '', $x), $playerNames);
 
         $playersArray = $playerRepository->getPlayersDataForTeams($playerNames);
         $finalRedTeam = $finalBlueTeam = [];

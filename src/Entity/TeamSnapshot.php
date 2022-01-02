@@ -28,7 +28,7 @@ class TeamSnapshot
     private $playerSnapshots;
 
     /**
-     * @Groups("lastMatches", "matchDetails")
+     * @Groups({"lastMatches", "matchDetails"})
      * @ORM\Column(type="integer")
      */
     private ?int $score;
@@ -40,13 +40,13 @@ class TeamSnapshot
     private $calculatedMatch;
 
     /**
-     * @Groups("lastMatches", "matchDetails")
+     * @Groups({"lastMatches", "matchDetails"})
      * @ORM\Column(type="float", nullable=true)
      */
     private ?float $ratingChange;
 
     /**
-     * @Groups("lastMatches", "matchDetails")
+     * @Groups({"lastMatches", "matchDetails"})
      * @ORM\Column(type="boolean")
      */
     private bool $isRed;
@@ -57,7 +57,7 @@ class TeamSnapshot
     }
 
     /**
-     * @Groups("lastMatches", "matchDetails")
+     * @Groups({"lastMatches", "matchDetails"})
      * @param bool $fillZeroes
      * @return float|null
      */

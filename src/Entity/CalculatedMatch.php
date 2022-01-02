@@ -55,7 +55,7 @@ class CalculatedMatch
     private $goals;
 
     /**
-     * @Groups("lastMatches", "matchDetails")
+     * @Groups({"lastMatches", "matchDetails"})
      * @var TeamSnapshot[]|Collection
      *
      * @ORM\OneToMany(targetEntity=TeamSnapshot::class, mappedBy="calculatedMatch")

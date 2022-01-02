@@ -35,7 +35,7 @@ class PlayerSnapshot
     private $rating = null;
 
     /**
-     * @Groups("lastMatches", "matchDetails")
+     * @Groups({"lastMatches", "matchDetails"})
      * @ORM\Column(type="boolean")
      */
     private $isRed;
